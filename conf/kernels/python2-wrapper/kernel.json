@@ -1,0 +1,11 @@
+{
+ "display_name": "Python 2 (LC_wrapper)",
+ "language": "python",
+ "argv": [
+  "python",
+  "-m",
+  "lc_wrapper",
+  "-f",
+  "{connection_file}"
+ ]
+}

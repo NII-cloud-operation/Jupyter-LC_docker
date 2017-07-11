@@ -1,0 +1,19 @@
+{
+  "load_extensions": {
+    "nbextensions_configurator/config_menu/main": true,
+    "runtools/main": true,
+    "dragdrop/main": true,
+    "toc2/main": true,
+    "code_font_size/code_font_size": true,
+    "contrib_nbextensions_help_item/main": true,
+    "multi_outputs/main": true,
+    "collapsible_headings/main": true,
+    "nblineage/main": true,
+    "run_through/main": true,
+    "nbextension_i18n_cells/main": true
+  },
+  "toc_number_sections": true,
+  "RunThrough": {
+    "frozen_color": "#6495ed"
+  }
+}
