@@ -172,8 +172,13 @@ RUN jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 
 ### notebooks dir
 USER root
-RUN mkdir -p /notebooks && chown $NB_USER:users /notebooks
+RUN mkdir -p /notebooks
+ADD notebooks /notebooks
+RUN chown $NB_USER:users -R /notebooks
 WORKDIR /notebooks
+
+### AWS CLI
+RUN pip install awscli
 
 ### Bash Strict Mode
 RUN cp /tmp/bash_env /etc/bash_env

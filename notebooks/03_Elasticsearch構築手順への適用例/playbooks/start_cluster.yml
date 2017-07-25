@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+  - name: start elasticsearch
+    systemd: state=started name=elasticsearch
+    become: true
+    
+    
