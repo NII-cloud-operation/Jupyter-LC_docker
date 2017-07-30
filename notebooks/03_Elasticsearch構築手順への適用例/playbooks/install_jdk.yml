@@ -4,19 +4,14 @@
   
   tasks:
 
-  - name: copy local rpm to remote
-    copy: >
-      src=/tmp/jdk-8u131-linux-x64.rpm
-      dest=/tmp/jdk-8u131-linux-x64.rpm
-
   - name: install jdk
     yum:
-      name: /tmp/jdk-8u131-linux-x64.rpm
+      name: java-1.8.0-openjdk-devel
 
   - name: set JAVA_HOME
     lineinfile: >
       dest=~/.bash_profile
-      line='export JAVA_HOME="/usr/java/jdk1.8.0_131"'
+      line='export JAVA_HOME="/usr/lib/jvm/java-1.8.0-openjdk"'
 
   - name: set PATH
     lineinfile: >
