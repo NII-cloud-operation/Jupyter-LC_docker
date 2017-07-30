@@ -178,7 +178,9 @@ RUN chown $NB_USER:users -R /notebooks
 WORKDIR /notebooks
 
 ### AWS CLI
-RUN pip install awscli
+RUN pip install awscli && \
+    apt-get update && apt-get install -y groff && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ### Bash Strict Mode
 RUN cp /tmp/bash_env /etc/bash_env
