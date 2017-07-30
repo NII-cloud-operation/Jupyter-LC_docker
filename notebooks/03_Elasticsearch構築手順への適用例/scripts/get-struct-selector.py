@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import codecs
+import os
 
 ITEM1 = u'お試し用構成 1TB'
 ITEM2 = u'運用可能最小構成 1.5TB'
@@ -18,7 +19,7 @@ def get_hosts(start, end):
 
 def select_profile(index, CLUSTER_NAME):
     SPECS_TEMPLATE = u"ホスト数: {0}\nCPU数: {1}\nメモリ(GB): {2}\nディスクサイズ(GB): {3}\n"
-    HOSTS_TEMPLATE = u"[all:children]\n{0}\n[master-nodes:children]\n{1}\n[data-nodes:children]\n{2}\n[ingest-nodes:children]\n{3}\n[logstash-server:children]\n{4}"
+    HOSTS_TEMPLATE = u"[all]\n{0}\n[master-nodes]\n{1}\n[data-nodes]\n{2}\n[ingest-nodes]\n{3}\n[logstash-server]\n{4}"
     GROUP_VARS_TEMPLATE = u"cluster_name: {0} #クラスタ名\nshards: {1} #Shard数\nreplicas: {2} #Replica数\nmin_master_nodes: {3} #最小Master Node数\nes_heap_size: {4} #ヒープサイズ\n"
     if index == 0:
         profile_name = ITEM1
@@ -44,6 +45,8 @@ def select_profile(index, CLUSTER_NAME):
     print("インベントリ → ./hosts_template に出力")
     print("------------------------------------")
     print(inventory)
+    if not os.path.exists('./group_vars/'):
+        os.mkdir('./group_vars')
     with codecs.open("./group_vars/all", "w", 'utf-8') as f:
         f.write(params)
         f.close()
