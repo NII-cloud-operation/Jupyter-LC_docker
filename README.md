@@ -2,6 +2,10 @@
 
 Jupyter Notebook server which bundles a set of tools for *Literate Computing for Reproducible Infrastructure*.  This bundle shows how to implement robust and reliable operational procedure rather than explorative procedure within Jupyter’s GUI.
 
+The goals for Literate Computing tools are:
+* Preventing miss-operation; once a cell has been executed, it “freezes” against unintended execution.  Also you can “lock” cells for unintended modification. 
+* Adding a perspective into a notebook; markdown’s hierarchy is collapsible as document according to your focus.  However, embedded cells underneath are represented as dots and run through with a click as a routine procedure.
+
 ## What it Gives You
 
 - Jupyter Notebook 5.0.x
