@@ -172,7 +172,9 @@ RUN jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 
 ### notebooks dir
 USER root
-RUN mkdir -p /notebooks && chown $NB_USER:users /notebooks
+RUN mkdir -p /notebooks
+ADD sample-notebooks /notebooks
+RUN chown $NB_USER:users -R /notebooks
 WORKDIR /notebooks
 
 ### Bash Strict Mode
