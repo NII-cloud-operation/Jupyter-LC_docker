@@ -137,15 +137,9 @@ RUN cd /tmp && \
     rm Miniconda3-4.2.12-Linux-x86_64.sh && \
     $CONDA3_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA3_DIR/bin/conda install --quiet --yes \
+    notebook matplotlib pandas pip && \
     $CONDA3_DIR/bin/conda clean -tipsy
-
-RUN $CONDA3_DIR/bin/conda install --quiet --yes \
-    notebook matplotlib pandas pip \
-    && $CONDA3_DIR/bin/conda clean -tipsy
-
-USER $NB_USER
-RUN $CONDA3_DIR/bin/ipython kernel install --user
-USER root
 
 ### extensions for jupyter (python2)
 
@@ -193,21 +187,15 @@ RUN jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 ### extensions for Jupyter (python3)
 USER root
 RUN $CONDA3_DIR/bin/pip install \
-    https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master
-USER $NB_USER
-RUN $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/python3-wrapper --user
-USER root
+    https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master && \
+    $CONDA3_DIR/bin/pip install jupyter_nbextensions_configurator ipywidgets && \
+    $CONDA3_DIR/bin/pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master
 
-#### jupyter_nbextensions_configurator
-RUN $CONDA3_DIR/bin/pip install jupyter_nbextensions_configurator ipywidgets
-    
-#### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
-RUN $CONDA3_DIR/bin/pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master
 USER $NB_USER
-RUN $CONDA3_DIR/bin/jupyter nblineage quick-setup --user
-
-#### widgetsnbextension
-RUN $CONDA3_DIR/bin/jupyter nbextension enable --user --py widgetsnbextension
+RUN $CONDA3_DIR/bin/ipython kernel install --user && \
+    $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/python3-wrapper --user && \
+    $CONDA3_DIR/bin/jupyter nblineage quick-setup --user && \
+    $CONDA3_DIR/bin/jupyter nbextension enable --user --py widgetsnbextension
 
 ### notebooks dir
 USER root
