@@ -3,13 +3,13 @@
 Jupyter Notebook server which bundles a set of tools for *Literate Computing for Reproducible Infrastructure*.  This bundle shows how to implement robust and reliable operational procedure rather than explorative procedure within Jupyter’s GUI.
 
 The goals for Literate Computing tools are:
-* Preventing miss-operation; once a cell has been executed, it “freezes” against unintended execution.  Also you can “lock” cells for unintended modification. 
+* Preventing miss-operation; once a cell has been executed, it “freezes” against unintended execution.  Also you can “lock” cells for unintended modification.
 * Adding a perspective into a notebook; markdown’s hierarchy is collapsible as document according to your focus.  However, embedded cells underneath are represented as dots and run through with a click as a routine procedure.
 
 ## What it Gives You
 
 - Jupyter Notebook 5.0.x
-- Python2 kernel with LC_wrapper https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
+- Python2/Python3 kernel with LC_wrapper https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
 - Extensions
     - multi_outputs https://github.com/NII-cloud-operation/Jupyter-multi_outputs
     - run_through https://github.com/NII-cloud-operation/Jupyter-LC_run_through
@@ -24,7 +24,7 @@ You can start the Notebook server on port 8888 with the following command.
 docker run -it --rm -p 8888:8888 niicloudoperation/notebook
 ```
 
-You can login the Notebook server with the authentication token in the startup message. 
+You can login the Notebook server with the authentication token in the startup message.
 
 ## Docker Options
 
