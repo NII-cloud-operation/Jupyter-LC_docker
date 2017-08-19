@@ -76,8 +76,6 @@ RUN mkdir -p $HOME/.jupyter && \
 USER root
 RUN cat /tmp/sitecustomize.py >> /usr/lib/python2.7/sitecustomize.py
 
-# Install virtualenv
-RUN easy_install virtualenv
 SHELL ["/bin/bash", "-c"]
 
 # Add jupyter kernels
@@ -100,29 +98,8 @@ RUN apt-get update && \
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip install netaddr pyapi-gitlab runipy
-
-#### serverspec
-USER root
-RUN apt-get update && \
-    apt-get install -y autoconf bison build-essential libssl-dev libyaml-dev \
-                       libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev \
-                       libgdbm3 libgdbm-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    git clone https://github.com/tagomoris/xbuild.git /root/.xbuild && \
-    /root/.xbuild/ruby-install 2.2.7 /usr/local/ruby/2.2.7
-ENV PATH /usr/local/ruby/2.2.7/bin:$PATH
-RUN gem install serverspec
-
-#### fluentd (fluent-cat)
-RUN gem install fluentd
-
-#### groovy
-RUN apt-get update && apt-get install -y groovy && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-#### pysnmp
-RUN pip install pysnmp pysnmp-mibs
+    pip install netaddr pyapi-gitlab runipy \
+                pysnmp pysnmp-mibs
 
 ### Add files
 RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
