@@ -44,9 +44,13 @@ RUN bash -c 'apt-get update && apt-get install -yq --no-install-recommends \
              pip2 install -U pip setuptools six && \
              apt-get clean && rm -rf /var/lib/apt/lists/*'
 
-RUN pip install jupyter
-
-RUN apt-get update && apt-get install -yq --no-install-recommends \
+## Python kernel with matplotlib, etc...
+RUN pip install jupyter && \
+    pip install pandas matplotlib numpy \
+                seaborn scipy scikit-learn scikit-image \
+                sympy cython patsy \
+                statsmodels cloudpickle dill bokeh h5py && \
+    apt-get update && apt-get install -yq --no-install-recommends \
     git \
     vim \
     jed \
@@ -77,12 +81,6 @@ USER root
 RUN cat /tmp/sitecustomize.py >> /usr/lib/python2.7/sitecustomize.py
 
 SHELL ["/bin/bash", "-c"]
-
-### Python kernel with matplotlib, etc...
-RUN pip install pandas matplotlib numpy \
-                seaborn scipy scikit-learn scikit-image \
-                sympy cython patsy \
-                statsmodels cloudpickle dill bokeh h5py
 
 ### ansible
 RUN apt-get update && \
