@@ -12,9 +12,9 @@ This will always be an empty file in IPython
     display:block;
     background: url(logo.png) no-repeat;
     background-size: contain;
-    width: 233px;
+    width: 150px;
     height: 28px;
-    padding-left: 233px;
+    padding-left: 150px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
