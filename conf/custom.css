@@ -8,6 +8,17 @@ This will always be an empty file in IPython
 
 @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro);
 
+#ipython_notebook img{
+    display:block;
+    background: url(logo.png) no-repeat;
+    background-size: contain;
+    width: 233px;
+    height: 33px;
+    padding-left: 233px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .CodeMirror pre {   /* area of code cell */
 	font-family: "Source Code Pro", monospace;
 }
