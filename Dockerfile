@@ -114,47 +114,33 @@ RUN cd /tmp && \
     $CONDA3_DIR/bin/conda clean -tipsy
 
 ### extensions for jupyter (python2)
-
 #### jupyter_nbextensions_configurator
-RUN pip install jupyter_nbextensions_configurator
-
 #### jupyter_contrib_nbextensions
-RUN pip install six \
-    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master
+#### nbextension_i18n (NII) - https://github.com/NII-cloud-operation/Jupyter-i18n_cells
+#### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
+#### Jupyter-LC_through (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_run_through
+#### Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
+#### Jupyter-multi_outputs (NII) - https://github.com/NII-cloud-operation/Jupyter-multi_outputs
+RUN pip install jupyter_nbextensions_configurator && \
+    pip install six \
+    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master && \
+    pip install git+https://github.com/NII-cloud-operation/Jupyter-i18n_cells.git && \
+    pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
+    pip install https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master && \
+    pip install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master
+
 USER $NB_USER
 RUN mkdir -p $HOME/.local/share && \
-    jupyter contrib nbextension install --user
-
-#### Jupyter-multi_outputs (NII) - https://github.com/NII-cloud-operation/Jupyter-multi_outputs
-RUN curl -L https://github.com/NII-cloud-operation/Jupyter-multi_outputs/archive/master.zip > /tmp/multi_outputs.zip && \
+    jupyter contrib nbextension install --user && \
+    curl -L https://github.com/NII-cloud-operation/Jupyter-multi_outputs/archive/master.zip > /tmp/multi_outputs.zip && \
     cd /tmp && unzip /tmp/multi_outputs.zip && \
     mkdir -p $HOME/.local/share/jupyter/nbextensions/multi_outputs/ && \
-    cp -f /tmp/Jupyter-multi_outputs-master/* $HOME/.local/share/jupyter/nbextensions/multi_outputs/
-
-#### nbextension_i18n (NII) - https://github.com/NII-cloud-operation/Jupyter-i18n_cells
-USER root
-RUN pip install git+https://github.com/NII-cloud-operation/Jupyter-i18n_cells.git
-USER $NB_USER
-RUN jupyter nbextension install --py nbextension_i18n_cells --user && \
-    jupyter nbextension enable --py nbextension_i18n_cells --user
-
-#### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
-USER root
-RUN pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master
-USER $NB_USER
-RUN jupyter nblineage quick-setup --user
-
-#### Jupyter-LC_through (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_run_through
-USER root
-RUN pip install https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master
-USER $NB_USER
-RUN jupyter run-through quick-setup --user
-
-#### Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
-USER root
-RUN pip install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master
-USER $NB_USER
-RUN jupyter kernelspec install /tmp/kernels/python2-wrapper --user
+    cp -f /tmp/Jupyter-multi_outputs-master/* $HOME/.local/share/jupyter/nbextensions/multi_outputs/ && \
+    jupyter nbextension install --py nbextension_i18n_cells --user && \
+    jupyter nbextension enable --py nbextension_i18n_cells --user && \
+    jupyter nblineage quick-setup --user && \
+    jupyter run-through quick-setup --user && \
+    jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 
 ### extensions for Jupyter (python3)
 USER root
