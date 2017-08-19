@@ -78,11 +78,6 @@ RUN cat /tmp/sitecustomize.py >> /usr/lib/python2.7/sitecustomize.py
 
 SHELL ["/bin/bash", "-c"]
 
-# Add jupyter kernels
-USER $NB_USER
-
-USER root
-
 ### Python kernel with matplotlib, etc...
 RUN pip install pandas matplotlib numpy \
                 seaborn scipy scikit-learn scikit-image \
