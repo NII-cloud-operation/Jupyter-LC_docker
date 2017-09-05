@@ -89,7 +89,7 @@ RUN apt-get update && \
     pip install requests paramiko ansible
 
 ### Utilities
-RUN apt-get update && apt-get install -y virtinst dnsutils zip tree && \
+RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     pip install netaddr pyapi-gitlab runipy \
                 pysnmp pysnmp-mibs
