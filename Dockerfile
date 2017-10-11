@@ -130,10 +130,10 @@ RUN pip install jupyter_nbextensions_configurator && \
 USER $NB_USER
 RUN mkdir -p $HOME/.local/share && \
     jupyter contrib nbextension install --user && \
-    curl -L https://github.com/NII-cloud-operation/Jupyter-multi_outputs/archive/master.zip > /tmp/multi_outputs.zip && \
+    curl -L https://github.com/NII-cloud-operation/Jupyter-multi_outputs/archive/release/version2.zip > /tmp/multi_outputs.zip && \
     cd /tmp && unzip /tmp/multi_outputs.zip && \
     mkdir -p $HOME/.local/share/jupyter/nbextensions/multi_outputs/ && \
-    cp -f /tmp/Jupyter-multi_outputs-master/* $HOME/.local/share/jupyter/nbextensions/multi_outputs/ && \
+    cp -f /tmp/Jupyter-multi_outputs-release-version2/* $HOME/.local/share/jupyter/nbextensions/multi_outputs/ && \
     jupyter nbextension install --py nbextension_i18n_cells --user && \
     jupyter nbextension enable --py nbextension_i18n_cells --user && \
     jupyter nblineage quick-setup --user && \
