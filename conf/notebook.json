@@ -1,7 +1,6 @@
 {
   "load_extensions": {
     "nbextensions_configurator/config_menu/main": true,
-    "runtools/main": true,
     "dragdrop/main": true,
     "toc2/main": true,
     "code_font_size/code_font_size": true,
