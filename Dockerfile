@@ -119,6 +119,7 @@ RUN cd /tmp && \
 #### Jupyter-LC_through (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_run_through
 #### Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
 #### Jupyter-multi_outputs (NII) - https://github.com/NII-cloud-operation/Jupyter-multi_outputs
+#### Jupyter-LC_index (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_index
 RUN pip install jupyter_nbextensions_configurator && \
     pip install six \
     https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master && \
@@ -126,7 +127,9 @@ RUN pip install jupyter_nbextensions_configurator && \
     pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
     pip install https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master && \
     pip install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master && \
-    pip install git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs
+    pip install git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs && \
+    pip install git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git
+
 
 USER $NB_USER
 RUN mkdir -p $HOME/.local/share && \
@@ -137,6 +140,8 @@ RUN mkdir -p $HOME/.local/share && \
     jupyter run-through quick-setup --user && \
     jupyter nbextension install --py lc_multi_outputs --user && \
     jupyter nbextension enable --py lc_multi_outputs --user && \
+    jupyter nbextension install --py notebook_index --user && \
+    jupyter nbextension enable --py notebook_index --user && \
     jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 
 ### extensions for Jupyter (python3)
