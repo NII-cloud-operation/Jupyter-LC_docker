@@ -150,11 +150,14 @@ USER root
 RUN $CONDA3_DIR/bin/pip install \
     https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master && \
     $CONDA3_DIR/bin/pip install jupyter_nbextensions_configurator ipywidgets && \
-    $CONDA3_DIR/bin/pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master
+    $CONDA3_DIR/bin/pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
+    $CONDA3_DIR/bin/pip install bash_kernel
 
 USER $NB_USER
 RUN $CONDA3_DIR/bin/ipython kernel install --user && \
+    $CONDA3_DIR/bin/python -m bash_kernel.install --user && \
     $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/python3-wrapper --user && \
+    $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/bash-wrapper --user && \
     $CONDA3_DIR/bin/jupyter nblineage quick-setup --user && \
     $CONDA3_DIR/bin/jupyter nbextension enable --user --py widgetsnbextension
 
