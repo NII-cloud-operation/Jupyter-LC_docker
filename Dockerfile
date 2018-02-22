@@ -179,11 +179,8 @@ RUN mkdir -p $HOME/.jupyter/nbconfig && \
 
 ### Theme for jupyter
 RUN mkdir -p $HOME/.jupyter/custom/ && \
-    cd /tmp/ && curl -O http://fontawesome.io/assets/font-awesome-4.7.0.zip && \
-    unzip font-awesome-4.7.0.zip && cp -fr font-awesome-4.7.0/fonts $HOME/.jupyter/custom/ && \
     cp /tmp/custom.css $HOME/.jupyter/custom/custom.css && \
-    cp /tmp/logo.png $HOME/.jupyter/custom/logo.png && \
-    sed -e s,../fonts/,./fonts/,g font-awesome-4.7.0/css/font-awesome.css >> $HOME/.jupyter/custom/custom.css
+    cp /tmp/logo.png $HOME/.jupyter/custom/logo.png
 
 ### Custom get_ipython().system() to control error propagation of shell commands
 RUN mkdir -p $HOME/.ipython/profile_default/startup && \
