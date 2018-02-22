@@ -41,12 +41,12 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
 RUN bash -c 'apt-get update && apt-get install -yq --no-install-recommends \
              curl python2.7-dev python2.7 build-essential && \
              curl -L https://bootstrap.pypa.io/get-pip.py | python2.7 && \
-             pip2 install -U pip setuptools six && \
+             pip2 --no-cache-dir install -U pip setuptools six && \
              apt-get clean && rm -rf /var/lib/apt/lists/*'
 
 ## Python kernel with matplotlib, etc...
-RUN pip install jupyter && \
-    pip install pandas matplotlib numpy \
+RUN pip --no-cache-dir install jupyter && \
+    pip --no-cache-dir install pandas matplotlib numpy \
                 seaborn scipy scikit-learn scikit-image \
                 sympy cython patsy \
                 statsmodels cloudpickle dill bokeh h5py && \
@@ -87,12 +87,12 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
     apt-get -y install sshpass openssl ipmitool libssl-dev libffi-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip install requests paramiko ansible
+    pip --no-cache-dir install requests paramiko ansible
 
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip install netaddr pyapi-gitlab runipy \
+    pip --no-cache-dir install netaddr pyapi-gitlab runipy \
                 pysnmp pysnmp-mibs
 
 ### Add files
@@ -121,15 +121,15 @@ RUN cd /tmp && \
 #### Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
 #### Jupyter-multi_outputs (NII) - https://github.com/NII-cloud-operation/Jupyter-multi_outputs
 #### Jupyter-LC_index (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_index
-RUN pip install jupyter_nbextensions_configurator && \
-    pip install six \
-    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master && \
-    pip install git+https://github.com/NII-cloud-operation/Jupyter-i18n_cells.git && \
-    pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
-    pip install https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master && \
-    pip install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master && \
-    pip install git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs && \
-    pip install git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git
+RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
+    pip --no-cache-dir install six \
+    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
+    git+https://github.com/NII-cloud-operation/Jupyter-i18n_cells.git \
+    https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
+    https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master \
+    https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
+    git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs \
+    git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git
 
 
 USER $NB_USER
@@ -147,11 +147,10 @@ RUN mkdir -p $HOME/.local/share && \
 
 ### extensions for Jupyter (python3)
 USER root
-RUN $CONDA3_DIR/bin/pip install \
-    https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master && \
-    $CONDA3_DIR/bin/pip install jupyter_nbextensions_configurator ipywidgets && \
-    $CONDA3_DIR/bin/pip install https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
-    $CONDA3_DIR/bin/pip install bash_kernel
+RUN $CONDA3_DIR/bin/pip --no-cache-dir install jupyter_nbextensions_configurator ipywidgets && \
+    $CONDA3_DIR/bin/pip --no-cache-dir install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
+    https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
+    bash_kernel
 
 USER $NB_USER
 RUN $CONDA3_DIR/bin/ipython kernel install --user && \
