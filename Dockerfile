@@ -110,7 +110,10 @@ RUN cd /tmp && \
     $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA3_DIR/bin/conda install --quiet --yes \
     notebook matplotlib pandas pip && \
+    $CONDA3_DIR/bin/pip --no-cache-dir install pytz && \
     $CONDA3_DIR/bin/conda clean -tipsy
+#### Visualization
+RUN $CONDA3_DIR/bin/pip --no-cache-dir install folium
 
 ### extensions for jupyter (python2)
 #### jupyter_nbextensions_configurator
