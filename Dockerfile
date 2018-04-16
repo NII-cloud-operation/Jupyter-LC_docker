@@ -170,6 +170,9 @@ ADD sample-notebooks /notebooks
 RUN chown $NB_USER:users -R /notebooks
 WORKDIR /notebooks
 
+### utilities
+RUN pip install papermill
+
 ### Bash Strict Mode
 RUN cp /tmp/bash_env /etc/bash_env
 ENV BASH_ENV=/etc/bash_env
@@ -182,7 +185,11 @@ RUN mkdir -p $HOME/.jupyter/nbconfig && \
 ### Theme for jupyter
 RUN mkdir -p $HOME/.jupyter/custom/ && \
     cp /tmp/custom.css $HOME/.jupyter/custom/custom.css && \
-    cp /tmp/logo.png $HOME/.jupyter/custom/logo.png
+    cp /tmp/logo.png $HOME/.jupyter/custom/logo.png && \
+    curl -fL https://raw.githubusercontent.com/cytoscape/cytoscape.js/master/dist/cytoscape.min.js > $HOME/.jupyter/custom/cytoscape.min.js && \
+    curl -fL https://raw.githubusercontent.com/iVis-at-Bilkent/cytoscape.js-view-utilities/master/cytoscape-view-utilities.js > $HOME/.jupyter/custom/cytoscape-view-utilities.js && \
+    curl -fL https://raw.githubusercontent.com/NII-cloud-operation/Jupyter-LC_notebook_diff/master/html/jupyter-notebook-diff.js > $HOME/.jupyter/custom/jupyter-notebook-diff.js && \
+    curl -fL https://raw.githubusercontent.com/NII-cloud-operation/Jupyter-LC_notebook_diff/master/html/jupyter-notebook-diff.css > $HOME/.jupyter/custom/jupyter-notebook-diff.css
 
 ### Custom get_ipython().system() to control error propagation of shell commands
 RUN mkdir -p $HOME/.ipython/profile_default/startup && \
