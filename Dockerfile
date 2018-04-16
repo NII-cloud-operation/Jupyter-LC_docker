@@ -170,6 +170,9 @@ ADD sample-notebooks /notebooks
 RUN chown $NB_USER:users -R /notebooks
 WORKDIR /notebooks
 
+### utilities
+RUN pip install papermill
+
 ### Bash Strict Mode
 RUN cp /tmp/bash_env /etc/bash_env
 ENV BASH_ENV=/etc/bash_env
