@@ -186,10 +186,14 @@ RUN mkdir -p $HOME/.jupyter/nbconfig && \
 RUN mkdir -p $HOME/.jupyter/custom/ && \
     cp /tmp/custom.css $HOME/.jupyter/custom/custom.css && \
     cp /tmp/logo.png $HOME/.jupyter/custom/logo.png && \
+    mkdir -p $HOME/.jupyter/custom/codemirror/addon/merge/ && \
     curl -fL https://raw.githubusercontent.com/cytoscape/cytoscape.js/master/dist/cytoscape.min.js > $HOME/.jupyter/custom/cytoscape.min.js && \
     curl -fL https://raw.githubusercontent.com/iVis-at-Bilkent/cytoscape.js-view-utilities/master/cytoscape-view-utilities.js > $HOME/.jupyter/custom/cytoscape-view-utilities.js && \
     curl -fL https://raw.githubusercontent.com/NII-cloud-operation/Jupyter-LC_notebook_diff/master/html/jupyter-notebook-diff.js > $HOME/.jupyter/custom/jupyter-notebook-diff.js && \
-    curl -fL https://raw.githubusercontent.com/NII-cloud-operation/Jupyter-LC_notebook_diff/master/html/jupyter-notebook-diff.css > $HOME/.jupyter/custom/jupyter-notebook-diff.css
+    curl -fL https://raw.githubusercontent.com/NII-cloud-operation/Jupyter-LC_notebook_diff/master/html/jupyter-notebook-diff.css > $HOME/.jupyter/custom/jupyter-notebook-diff.css && \
+    curl -fL https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js > $HOME/.jupyter/custom/diff_match_patch.js && \
+    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.js > $HOME/.jupyter/custom/codemirror/addon/merge/merge.js && \
+    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.min.css > $HOME/.jupyter/custom/merge.min.css
 
 ### Custom get_ipython().system() to control error propagation of shell commands
 RUN mkdir -p $HOME/.ipython/profile_default/startup && \
