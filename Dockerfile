@@ -47,9 +47,7 @@ RUN bash -c 'apt-get update && apt-get install -yq --no-install-recommends \
 ## Python kernel with matplotlib, etc...
 RUN pip --no-cache-dir install jupyter && \
     pip --no-cache-dir install pandas matplotlib numpy \
-                seaborn scipy scikit-learn scikit-image \
-                sympy cython patsy \
-                statsmodels cloudpickle dill bokeh h5py && \
+                seaborn scipy scikit-learn dill bokeh && \
     apt-get update && apt-get install -yq --no-install-recommends \
     git \
     vim \
