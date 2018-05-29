@@ -3,6 +3,7 @@ c.NotebookApp.ip = '*'
 c.MultiKernelManager.kernel_manager_class = 'lc_wrapper.LCWrapperKernelManager'
 c.KernelManager.shutdown_wait_time = 10.0
 c.FileContentsManager.delete_to_trash = False
+c.NotebookApp.quit_button = False
 
 if 'PASSWORD' in os.environ:
     from notebook.auth import passwd
