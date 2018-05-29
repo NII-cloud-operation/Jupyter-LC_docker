@@ -130,7 +130,8 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
     git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs \
-    git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git
+    git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git \
+    git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git
 
 
 USER $NB_USER
@@ -144,6 +145,7 @@ RUN mkdir -p $HOME/.local/share && \
     jupyter nbextension enable --py lc_multi_outputs --user && \
     jupyter nbextension install --py notebook_index --user && \
     jupyter nbextension enable --py notebook_index --user && \
+    jupyter nbextension install --py lc_notebook_diff --user && \
     jupyter kernelspec install /tmp/kernels/python2-wrapper --user
 
 ### extensions for Jupyter (python3)
