@@ -100,10 +100,10 @@ RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
 ENV CONDA3_DIR /opt/conda3
 RUN cd /tmp && \
     mkdir -p $CONDA3_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
-    echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA3_DIR && \
-    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh && \
+    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-4.5.4-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda3-4.5.4-Linux-x86_64.sh -f -b -p $CONDA3_DIR && \
+    rm Miniconda3-4.5.4-Linux-x86_64.sh && \
     $CONDA3_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA3_DIR/bin/conda install --quiet --yes \
