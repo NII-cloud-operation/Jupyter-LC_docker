@@ -153,6 +153,7 @@ USER root
 RUN $CONDA3_DIR/bin/pip --no-cache-dir install jupyter_nbextensions_configurator ipywidgets && \
     $CONDA3_DIR/bin/pip --no-cache-dir install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
+    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
     bash_kernel
 
 USER $NB_USER
