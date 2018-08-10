@@ -106,6 +106,7 @@ RUN cd /tmp && \
     rm Miniconda3-4.5.4-Linux-x86_64.sh && \
     $CONDA3_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA3_DIR/bin/conda update --all --quiet --yes && \
     $CONDA3_DIR/bin/conda install --quiet --yes \
     notebook matplotlib pandas pip && \
     $CONDA3_DIR/bin/pip --no-cache-dir install pytz && \
