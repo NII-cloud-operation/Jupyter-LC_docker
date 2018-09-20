@@ -33,4 +33,5 @@ You may customize the execution of Docker container and the Notebook server cont
 
 - `-e lc_wrapper_force=on` - Force summarizing and logging mode of lc_wrapper (via env)
 - `-e TZ=JST-9` - Specify the container timezone
+- `-e PASSWORD=MY_UNBREAKABLE_PASS` - Set a initial password
 - `-v /some/host/folder/for/work:/notebooks` - Mounts the host directory to the working directory in the container
