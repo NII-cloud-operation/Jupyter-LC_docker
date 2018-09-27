@@ -1,5 +1,6 @@
 import os
 c.NotebookApp.ip = '*'
+c.NotebookApp.allow_remote_access = True
 c.MultiKernelManager.kernel_manager_class = 'lc_wrapper.LCWrapperKernelManager'
 c.KernelManager.shutdown_wait_time = 10.0
 c.FileContentsManager.delete_to_trash = False
