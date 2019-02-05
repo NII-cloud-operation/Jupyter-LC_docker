@@ -14,7 +14,6 @@ The goals for Literate Computing tools are:
     - multi_outputs https://github.com/NII-cloud-operation/Jupyter-multi_outputs
     - run_through https://github.com/NII-cloud-operation/Jupyter-LC_run_through
     - nblineage https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
-    - i18n_cells https://github.com/NII-cloud-operation/Jupyter-i18n_cells
     - index https://github.com/NII-cloud-operation/Jupyter-LC_index
 
 ## Basic Use

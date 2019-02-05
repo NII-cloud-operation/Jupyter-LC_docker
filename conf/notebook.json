@@ -8,7 +8,6 @@
     "collapsible_headings/main": true,
     "nblineage/main": true,
     "run_through/main": true,
-    "nbextension_i18n_cells/main": true,
     "lc_wrapper/main": true
   },
   "toc_number_sections": true,

@@ -117,7 +117,6 @@ RUN $CONDA3_DIR/bin/pip --no-cache-dir install folium
 ### extensions for jupyter (python2)
 #### jupyter_nbextensions_configurator
 #### jupyter_contrib_nbextensions
-#### nbextension_i18n (NII) - https://github.com/NII-cloud-operation/Jupyter-i18n_cells
 #### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
 #### Jupyter-LC_through (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_run_through
 #### Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
@@ -126,7 +125,6 @@ RUN $CONDA3_DIR/bin/pip --no-cache-dir install folium
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six \
     https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
-    git+https://github.com/NII-cloud-operation/Jupyter-i18n_cells.git \
     https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
@@ -138,8 +136,6 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
 USER $NB_USER
 RUN mkdir -p $HOME/.local/share && \
     jupyter contrib nbextension install --user && \
-    jupyter nbextension install --py nbextension_i18n_cells --user && \
-    jupyter nbextension enable --py nbextension_i18n_cells --user && \
     jupyter nblineage quick-setup --user && \
     jupyter run-through quick-setup --user && \
     jupyter nbextension install --py lc_multi_outputs --user && \
