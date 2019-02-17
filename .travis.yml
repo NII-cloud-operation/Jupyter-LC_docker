@@ -7,5 +7,6 @@ before_install:
   - docker build -t niicloudoperation/notebook .
 
 script:
-  - docker run niicloudoperation/notebook papermill '/notebooks/98_Test python2 env.ipynb' /tmp/Result.ipynb
-  - docker run niicloudoperation/notebook papermill '/notebooks/99_Test python3 env.ipynb' /tmp/Result.ipynb
+  - docker run --rm niicloudoperation/notebook jupyter notebook --version
+  - docker run --rm niicloudoperation/notebook papermill '/notebooks/98_Test python2 env.ipynb' /tmp/Result.ipynb
+  - docker run --rm niicloudoperation/notebook papermill '/notebooks/99_Test python3 env.ipynb' /tmp/Result.ipynb
