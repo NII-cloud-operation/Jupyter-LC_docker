@@ -1,4 +1,4 @@
-# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure*
+# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Build Status](https://travis-ci.org/NII-cloud-operation/Jupyter-LC_docker.svg?branch=master)](https://travis-ci.org/NII-cloud-operation/Jupyter-LC_docker)
 
 Jupyter Notebook server which bundles a set of tools for *Literate Computing for Reproducible Infrastructure*.  This bundle shows how to implement robust and reliable operational procedure rather than explorative procedure within Jupyter’s GUI.
 
