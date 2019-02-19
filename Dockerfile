@@ -12,6 +12,8 @@ RUN REPO=http://cdn-fastly.deb.debian.org \
     ca-certificates \
     sudo \
     locales \
+    build-essential \
+    curl \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -38,11 +40,23 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     echo "$NB_USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$NB_USER
 
 # Install Jupyter
-RUN bash -c 'apt-get update && apt-get install -yq --no-install-recommends \
-             curl python2.7-dev python2.7 build-essential && \
-             curl -L https://bootstrap.pypa.io/get-pip.py | python2.7 && \
-             pip2 --no-cache-dir install -U pip setuptools six && \
-             apt-get clean && rm -rf /var/lib/apt/lists/*'
+
+### environments for Python3
+ENV CONDA3_DIR /opt/conda3
+RUN cd /tmp && \
+    mkdir -p $CONDA3_DIR && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh && \
+    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-4.5.4-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda3-4.5.4-Linux-x86_64.sh -f -b -p $CONDA3_DIR && \
+    rm Miniconda3-4.5.4-Linux-x86_64.sh && \
+    $CONDA3_DIR/bin/conda config --system --add channels conda-forge && \
+    $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA3_DIR/bin/conda update --all --quiet --yes && \
+    $CONDA3_DIR/bin/conda install --quiet --yes \
+    notebook matplotlib pandas pip && \
+    $CONDA3_DIR/bin/pip --no-cache-dir install pytz && \
+    $CONDA3_DIR/bin/conda clean -tipsy
+ENV PATH=$CONDA3_DIR/bin:$PATH
 
 ## Python kernel with matplotlib, etc...
 RUN pip --no-cache-dir install jupyter && \
@@ -77,8 +91,6 @@ RUN mkdir -p $HOME/.jupyter && \
        $HOME/.jupyter/jupyter_notebook_config.py
 
 USER root
-RUN cat /tmp/sitecustomize.py >> /usr/lib/python2.7/sitecustomize.py
-
 SHELL ["/bin/bash", "-c"]
 
 ### ansible
@@ -96,25 +108,10 @@ RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq && \
 ### Add files
 RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
 
-### environments for Python3
-ENV CONDA3_DIR /opt/conda3
-RUN cd /tmp && \
-    mkdir -p $CONDA3_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh && \
-    echo "a946ea1d0c4a642ddf0c3a26a18bb16d *Miniconda3-4.5.4-Linux-x86_64.sh" | md5sum -c - && \
-    /bin/bash Miniconda3-4.5.4-Linux-x86_64.sh -f -b -p $CONDA3_DIR && \
-    rm Miniconda3-4.5.4-Linux-x86_64.sh && \
-    $CONDA3_DIR/bin/conda config --system --add channels conda-forge && \
-    $CONDA3_DIR/bin/conda config --system --set auto_update_conda false && \
-    $CONDA3_DIR/bin/conda update --all --quiet --yes && \
-    $CONDA3_DIR/bin/conda install --quiet --yes \
-    notebook matplotlib pandas pip && \
-    $CONDA3_DIR/bin/pip --no-cache-dir install pytz && \
-    $CONDA3_DIR/bin/conda clean -tipsy
 #### Visualization
-RUN $CONDA3_DIR/bin/pip --no-cache-dir install folium
+RUN pip --no-cache-dir install folium
 
-### extensions for jupyter (python2)
+### extensions for jupyter
 #### jupyter_nbextensions_configurator
 #### jupyter_contrib_nbextensions
 #### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
@@ -123,7 +120,7 @@ RUN $CONDA3_DIR/bin/pip --no-cache-dir install folium
 #### Jupyter-multi_outputs (NII) - https://github.com/NII-cloud-operation/Jupyter-multi_outputs
 #### Jupyter-LC_index (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_index
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
-    pip --no-cache-dir install six \
+    pip --no-cache-dir install six bash_kernel \
     https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master \
@@ -145,23 +142,9 @@ RUN mkdir -p $HOME/.local/share && \
     jupyter nbextension install --py lc_wrapper --user && \
     jupyter nbextension enable --py lc_wrapper --user && \
     jupyter nbextension install --py lc_notebook_diff --user && \
-    jupyter kernelspec install /tmp/kernels/python2-wrapper --user
-
-### extensions for Jupyter (python3)
-USER root
-RUN $CONDA3_DIR/bin/pip --no-cache-dir install jupyter_nbextensions_configurator ipywidgets && \
-    $CONDA3_DIR/bin/pip --no-cache-dir install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
-    https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
-    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
-    bash_kernel
-
-USER $NB_USER
-RUN $CONDA3_DIR/bin/ipython kernel install --user && \
-    $CONDA3_DIR/bin/python -m bash_kernel.install --user && \
-    $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/python3-wrapper --user && \
-    $CONDA3_DIR/bin/jupyter kernelspec install /tmp/kernels/bash-wrapper --user && \
-    $CONDA3_DIR/bin/jupyter nblineage quick-setup --user && \
-    $CONDA3_DIR/bin/jupyter nbextension enable --user --py widgetsnbextension
+    python -m bash_kernel.install --user && \
+    jupyter kernelspec install /tmp/kernels/python3-wrapper --user && \
+    jupyter kernelspec install /tmp/kernels/bash-wrapper --user
 
 ### notebooks dir
 USER root
