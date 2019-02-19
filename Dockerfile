@@ -111,7 +111,7 @@ RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
 #### Visualization
 RUN pip --no-cache-dir install folium
 
-### extensions for jupyter (python2)
+### extensions for jupyter
 #### jupyter_nbextensions_configurator
 #### jupyter_contrib_nbextensions
 #### Jupyter-LC_nblineage (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
