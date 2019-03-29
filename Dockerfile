@@ -4,7 +4,7 @@ MAINTAINER https://github.com/NII-cloud-operation
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN REPO=http://cdn-fastly.deb.debian.org \
- && echo "deb $REPO/debian jessie main\ndeb $REPO/debian jessie-updates main\ndeb $REPO/debian-security jessie/updates main" > /etc/apt/sources.list \
+ && echo "deb $REPO/debian jessie main\ndeb $REPO/debian-security jessie/updates main" > /etc/apt/sources.list \
  && apt-get update && apt-get -yq dist-upgrade \
  && apt-get install -yq --no-install-recommends \
     wget \
