@@ -2,7 +2,7 @@
  "display_name": "Bash (LC_wrapper)",
  "language": "bash",
  "argv": [
-  "/opt/conda3/bin/python",
+  "/opt/conda/bin/python",
   "-m",
   "lc_wrapper.bash",
   "-f",
