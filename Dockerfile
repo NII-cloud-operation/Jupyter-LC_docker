@@ -39,7 +39,7 @@ RUN apt-get update && \
     pip --no-cache-dir install requests paramiko ansible
 
 ### Utilities
-RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync && \
+RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     pip --no-cache-dir install netaddr pyapi-gitlab runipy papermill \
                 pysnmp pysnmp-mibs
