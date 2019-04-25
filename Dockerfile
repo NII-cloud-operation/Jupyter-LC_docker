@@ -119,4 +119,8 @@ RUN mkdir -p $CONDA_DIR/etc/ipython/startup/ && \
     cp /tmp/ipython_config.py $CONDA_DIR/etc/ipython/ && \
     cp /tmp/10-custom-get_ipython_system.py $CONDA_DIR/etc/ipython/startup/
 
+### Add run-hooks
+RUN mkdir -p /usr/local/bin/before-notebook.d && \
+    cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
+
 USER $NB_USER
