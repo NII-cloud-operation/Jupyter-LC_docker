@@ -41,7 +41,7 @@ RUN apt-get update && \
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip --no-cache-dir install netaddr pyapi-gitlab runipy papermill \
+    pip --no-cache-dir install netaddr pyapi-gitlab runipy papermill==0.19.0 \
                 pysnmp pysnmp-mibs
 
 ### Add files
