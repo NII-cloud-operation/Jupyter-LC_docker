@@ -15,6 +15,7 @@ The goals for Literate Computing tools are:
     - run_through https://github.com/NII-cloud-operation/Jupyter-LC_run_through
     - nblineage https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
     - index https://github.com/NII-cloud-operation/Jupyter-LC_index
+    - sidestickies https://github.com/NII-cloud-operation/sidestickies
 
 ## Basic Use
 
@@ -34,3 +35,4 @@ You may customize the execution of Docker container and the Notebook server cont
 - `-e TZ=JST-9` - Specify the container timezone
 - `-e PASSWORD=MY_UNBREAKABLE_PASS` - Set a initial password
 - `-v /some/host/folder/for/work:/notebooks` - Mounts the host directory to the working directory in the container
+- `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies). You can enable sidestickies extension via the Nbextensions tab.

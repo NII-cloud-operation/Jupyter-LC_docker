@@ -10,3 +10,10 @@ if 'PASSWORD' in os.environ:
     from notebook.auth import passwd
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
     del os.environ['PASSWORD']
+
+if 'SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID' in os.environ:
+    c.ScrapboxAPI.cookie_connect_sid = os.environ['SIDESTICKIES_SCRAPBOX_'
+                                                  'COOKIE_CONNECT_SID']
+
+if 'SIDESTICKIES_SCRAPBOX_PROJECT_ID' in os.environ:
+    c.ScrapboxAPI.project_id = os.environ['SIDESTICKIES_SCRAPBOX_PROJECT_ID']
