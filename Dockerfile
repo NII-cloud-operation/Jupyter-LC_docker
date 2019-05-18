@@ -66,7 +66,8 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
     git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs \
     git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git \
-    git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git
+    git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git \
+    git+https://github.com/NII-cloud-operation/sidestickies.git
 
 
 RUN jupyter contrib nbextension install --sys-prefix && \
@@ -80,6 +81,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbextension install --py lc_wrapper --sys-prefix && \
     jupyter nbextension enable --py lc_wrapper --sys-prefix && \
     jupyter nbextension install --py lc_notebook_diff --sys-prefix && \
+    jupyter nbextension install --py nbtags --sys-prefix && \
+    jupyter serverextension enable --py nbtags --sys-prefix && \
     jupyter nbextension enable nbextensions_configurator/config_menu/main --sys-prefix && \
     jupyter nbextension enable contrib_nbextensions_help_item/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
