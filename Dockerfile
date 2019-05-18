@@ -126,4 +126,6 @@ RUN mkdir -p $CONDA_DIR/etc/ipython/startup/ && \
 RUN mkdir -p /usr/local/bin/before-notebook.d && \
     cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
 
+RUN jupyter nbextension enable --py nbtags --sys-prefix
+ENV SIDESTICKIES_SCRAPBOX_PROJECT_ID sidestickies-public
 USER $NB_USER
