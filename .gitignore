@@ -1,3 +1,9 @@
 .ipynb_checkpoints
 .lc_wrapper_regex.txt
 .DS_Store
+.aws
+.ipython
+.jupyter
+.local
+.log
+.bash_history

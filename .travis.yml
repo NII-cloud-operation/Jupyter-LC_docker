@@ -8,5 +8,5 @@ before_install:
 
 script:
   - docker run --rm niicloudoperation/notebook jupyter notebook --version
-  - docker run --rm niicloudoperation/notebook papermill '/home/jovyan/97_Test nbextensions.ipynb' /tmp/Result.ipynb
-  - docker run --rm niicloudoperation/notebook papermill '/home/jovyan/99_Test python3 env.ipynb' /tmp/Result.ipynb
+  - docker run --rm niicloudoperation/notebook papermill '/home/jovyan/tests/97_Test nbextensions.ipynb' /tmp/Result.ipynb
+  - docker run --rm niicloudoperation/notebook papermill '/home/jovyan/tests/99_Test python3 env.ipynb' /tmp/Result.ipynb
