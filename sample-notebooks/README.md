@@ -28,3 +28,10 @@ Literate Computing for Reproducible Infrastructureは、インフラ運用の場
 Jupyterはもともとデータ分析用途に開発されたツールであるため、インフラの運用に適用するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
 
 * [02_NII謹製_Jupyterの機能拡張について](02_NII謹製_Jupyterの機能拡張について.ipynb)
+
+
+## Notebookを介したコミュニケーションについて
+
+Jupyterで行った経験を効率的に共有するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
+
+* [03_Notebookを介したコミュニケーション](03_Notebookを介したコミュニケーション.ipynb)
