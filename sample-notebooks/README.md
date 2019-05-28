@@ -17,7 +17,7 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 > <span style='background-color:mistyrose;'> **デモ環境を体験するに際して、 [Binder](https://mybinder.readthedocs.io/en/latest/) および [Scrapbox](https://scrapbox.io/product/) の利用規約は各自で確認ください。** </span>
 
 
-
+<img src="./tree/images/openhouse-2019-demo.png" align="right" width="25%" />
 
 ## Notebookの実行方法
 
