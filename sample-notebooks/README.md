@@ -11,7 +11,7 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 
 なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
 
-また、Sidestickies という Notebookに対して Sticky Note（付箋）を付与する機能では [Scrapbox](https://scrapbox.io/product /)サービスを利用しています。デモ環境の Sticky Note は参照のみで、編集できません。
+また、Sidestickies という Notebookに対して Sticky Note（付箋）を付与する機能では [Scrapbox](https://scrapbox.io/product/)サービスを利用しています。デモ環境の Sticky Note は参照のみで、編集できません。
 
 
 > <span style='background-color:mistyrose;'> **デモ環境を体験するに際して、 [Binder](https://mybinder.readthedocs.io/en/latest/) および [Scrapbox](https://scrapbox.io/product/) の利用規約は各自で確認ください。** </span>
