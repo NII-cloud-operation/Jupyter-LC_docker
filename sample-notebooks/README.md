@@ -45,7 +45,3 @@ Jupyterはもともとデータ分析用途に開発されたツールである�
 Jupyterで行った経験を効率的に共有するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
 
 * [03_Notebookを介したコミュニケーション](03_Notebookを介したコミュニケーション.ipynb)
-
----
-問い合わせ: https://www.facebook.com/groups/LiterateComputing/ 入会して情報交換
-           nii-cloud-operation (at) meatmail.jp
