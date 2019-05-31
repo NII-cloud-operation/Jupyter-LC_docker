@@ -18,7 +18,7 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 
 <img src="./tree/images/openhouse-2019-demo.png" align="right" width="25%" />
 
-質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！
+<span style='background-color:mistyrose;'> 質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！</span>
 
 ## Notebookの実行方法
 
