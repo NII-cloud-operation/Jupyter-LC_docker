@@ -18,6 +18,8 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 
 <img src="./tree/images/openhouse-2019-demo.png" align="right" width="25%" />
 
+質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！
+
 ## Notebookの実行方法
 
 このデモ環境では、Notebookという形式で、実際に自身で実行可能な運用作業の例が保存されています。
