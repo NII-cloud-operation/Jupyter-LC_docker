@@ -1,0 +1,14 @@
+{
+ "display_name": "Bash",
+ "language": "bash",
+ "argv": [
+  "/opt/conda/bin/python",
+  "-m",
+  "lc_wrapper.bash",
+  "-f",
+  "{connection_file}"
+ ],
+ "env": {
+  "PS1": "$"
+ }
+}
