@@ -91,6 +91,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     python -m bash_kernel.install --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/python3-wrapper --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/bash-wrapper --sys-prefix && \
+    jupyter wrapper-kernelspec install /tmp/wrapper-kernels/python3 --sys-prefix && \
+    jupyter wrapper-kernelspec install /tmp/wrapper-kernels/bash --sys-prefix && \
     fix-permissions /home/$NB_USER
 
 ### nbconfig
