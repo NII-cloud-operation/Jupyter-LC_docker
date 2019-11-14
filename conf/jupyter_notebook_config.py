@@ -15,6 +15,7 @@ if 'PASSWORD' in os.environ:
 if 'SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID' in os.environ:
     c.ScrapboxAPI.cookie_connect_sid = os.environ['SIDESTICKIES_SCRAPBOX_'
                                                   'COOKIE_CONNECT_SID']
+    del os.environ['SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID']
 
 if 'SIDESTICKIES_SCRAPBOX_PROJECT_ID' in os.environ:
     c.ScrapboxAPI.project_id = os.environ['SIDESTICKIES_SCRAPBOX_PROJECT_ID']
