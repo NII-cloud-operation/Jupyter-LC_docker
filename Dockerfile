@@ -41,8 +41,9 @@ RUN apt-get update && \
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip --no-cache-dir install netaddr pyapi-gitlab runipy papermill \
-                pysnmp pysnmp-mibs
+    conda install --quiet --yes papermill && \
+    pip --no-cache-dir install netaddr pyapi-gitlab runipy pysnmp pysnmp-mibs && \
+    conda clean --all -f -y
 
 ### Add files
 RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
