@@ -14,7 +14,7 @@ fi
 
 # Launch Supervisord (FS monitor and MongoDB(if needed))
 if [ $(id -u) == 0 ] ; then
-    sudo -u $NB_USER supervisord -c /opt/nbsearch/supervisor.conf
+    sudo -E -u $NB_USER supervisord -c /opt/nbsearch/supervisor.conf
 else
     supervisord -c /opt/nbsearch/supervisor.conf
 fi

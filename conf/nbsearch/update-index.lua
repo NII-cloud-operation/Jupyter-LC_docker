@@ -6,4 +6,4 @@ update_index = {
 	onMove    = "/opt/nbsearch/update-index ^d.pathname",
 }
 
-sync{update_index, source="/home/" .. os.getenv("USER")}
+sync{update_index, source="/home/" .. os.getenv("NB_USER")}
