@@ -3,7 +3,7 @@ systemLog:
     path: "/tmp/mongod.log"
     logAppend: true
 storage:
-    dbPath: /home/jovyan/.nbsearch/mongodb/
+    dbPath: /home/{NB_USER}/.nbsearch/mongodb/
     journal:
         enabled: true
 net:

@@ -144,7 +144,7 @@ RUN apt-get update && apt-get install -yq supervisor lsyncd uuid-runtime gnupg c
     && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-supervisor.sh \
     && cp /tmp/nbsearch/supervisor.conf /tmp/nbsearch/mongod* /opt/nbsearch/ \
     && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
-    && chown $NB_USER -R /home/$NB_USER/.nbsearch /opt/nbsearch/conf.d \
+    && chown $NB_USER -R /home/$NB_USER/.nbsearch /opt/nbsearch \
     && chmod +x /usr/local/bin/before-notebook.d/nbsearch-supervisor.sh /opt/nbsearch/update-index
 
 ENV NBSEARCHDB_HOSTNAME=127.0.0.1 NBSEARCHDB_PORT=27017

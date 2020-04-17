@@ -44,4 +44,4 @@ if 'NBSEARCHDB_PASSWORD' in os.environ:
 
 c.LocalSource.base_dir = os.environ['NBSEARCHDB_BASE_DIR'] \
                          if 'NBSEARCHDB_BASE_DIR' in os.environ else \
-                         os.environ['HOME']
+                         '/home/{}'.format(os.environ['NB_USER'])
