@@ -5,7 +5,9 @@ set -xe
 # For MongoDB
 if [[ "${NBSEARCHDB_HOSTNAME}" == "127.0.0.1" ]] ; then
     sed "s,{NB_USER},$NB_USER," /opt/nbsearch/mongod.conf.template > /opt/nbsearch/mongod.conf
-    ln -s /opt/nbsearch/mongodb.conf /opt/nbsearch/conf.d/mongodb.conf
+    if [[ ! -f /opt/nbsearch/conf.d/mongodb.conf ]]; then
+        ln -s /opt/nbsearch/mongodb.conf /opt/nbsearch/conf.d/mongodb.conf
+    fi
     mkdir -p /home/$NB_USER/.nbsearch/mongodb/
     chown $NB_UID:$NB_GID -R /home/$NB_USER/.nbsearch
 fi
