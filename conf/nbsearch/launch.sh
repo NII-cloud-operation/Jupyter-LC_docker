@@ -27,5 +27,5 @@ if [[ "${NBSEARCHDB_HOSTNAME}" == "127.0.0.1" || ! -z "${NBSEARCH_UPDATE_ALL_IND
         done
     fi
     set +e
-    jupyter nbsearch update-index $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py local
+    jupyter nbsearch update-index $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py --debug local
 fi
