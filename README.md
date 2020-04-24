@@ -37,5 +37,24 @@ You may customize the execution of Docker container and the Notebook server cont
 - `-e PASSWORD=MY_UNBREAKABLE_PASS` - Set a initial password
 - `-v /some/host/folder/for/work:/home/jovyan` - Mounts the host directory to the working directory in the container
 
-- `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies). You can enable sidestickies extension via the Nbextensions tab.
+### Using sidestickies
+
+You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) by the following steps.
+
+- Add `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` to docker options - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies).
+- Enable the sidestickies extension via the Nbextensions tab.
 *Note: you need to enable both "Sidestickies for file tree" and "Sidestickies for notebook" nbextensions.*
+
+### Using NBSearch
+
+You can use [NBSearch](https://github.com/NII-cloud-operation/nbsearch) by enabling the NBSearch extension via the Nbextensions tab.
+After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of Jupyter.
+
+NBSearch uses MongoDB to store and search notebooks, and this image will launch MongoDB locally in the container.
+If you would like to use your MongoDB for NBSearch, set the following environment variables to the options.
+
+- `-e NBSEARCHDB_HOSTNAME`, `-e NBSEARCHDB_PORT` - Hostname and port of the MongoDB
+- `-e NBSEARCHDB_USERNAME`, `-e NBSEARCHDB_PASSWORD` - Username and password of the MongoDB(if needed)
+- `-e NBSEARCHDB_DATABASE` - Database name in the MongoDB(default: `nbsearch`)
+- `-e NBSEARCHDB_COLLECTION` - Collection name in the Database(default: `notebooks`)
+- `-e NBSEARCHDB_BASE_DIR` - Notebook directory to be searchable(default: `/home/$NB_USER`)
