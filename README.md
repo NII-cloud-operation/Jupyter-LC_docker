@@ -50,8 +50,8 @@ You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) 
 You can use [NBSearch](https://github.com/NII-cloud-operation/nbsearch) by enabling the NBSearch extension via the Nbextensions tab.
 After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of Jupyter.
 
-NBSearch uses MongoDB to store and search notebooks, and this image will launch MongoDB locally in the container.
-If you would like to use your MongoDB for NBSearch, set the following environment variables to the options.
+NBSearch uses MongoDB to store and search notebooks, and this image will launch the MongoDB locally in the container.
+If you would like to use your MongoDB for NBSearch instead of the local MongoDB, set the following environment variables to the options.
 
 - `-e NBSEARCHDB_HOSTNAME`, `-e NBSEARCHDB_PORT` - Hostname and port of the MongoDB
 - `-e NBSEARCHDB_USERNAME`, `-e NBSEARCHDB_PASSWORD` - Username and password of the MongoDB(if needed)
