@@ -45,3 +45,7 @@ if 'NBSEARCHDB_PASSWORD' in os.environ:
 c.LocalSource.base_dir = os.environ['NBSEARCHDB_BASE_DIR'] \
                          if 'NBSEARCHDB_BASE_DIR' in os.environ else \
                          '/home/{}'.format(os.environ['NB_USER'])
+
+c.LocalSource.server = os.environ['NBSEARCHDB_MY_SERVER_URL'] \
+                       if 'NBSEARCHDB_MY_SERVER_URL' in os.environ else \
+                       'http://localhost:8888/'

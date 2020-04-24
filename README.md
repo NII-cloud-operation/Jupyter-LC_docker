@@ -53,8 +53,9 @@ After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of
 NBSearch uses MongoDB to store and search notebooks, and this image will launch the MongoDB locally in the container.
 If you would like to use your MongoDB for NBSearch instead of the local MongoDB, set the following environment variables to the options.
 
-- `-e NBSEARCHDB_HOSTNAME`, `-e NBSEARCHDB_PORT` - Hostname and port of the MongoDB
-- `-e NBSEARCHDB_USERNAME`, `-e NBSEARCHDB_PASSWORD` - Username and password of the MongoDB(if needed)
-- `-e NBSEARCHDB_DATABASE` - Database name in the MongoDB(default: `nbsearch`)
-- `-e NBSEARCHDB_COLLECTION` - Collection name in the Database(default: `notebooks`)
-- `-e NBSEARCHDB_BASE_DIR` - Notebook directory to be searchable(default: `/home/$NB_USER`)
+- `-e NBSEARCHDB_HOSTNAME=your_mongodb_hostname`, `-e NBSEARCHDB_PORT=your_mongodb_port` - Hostname and port of the MongoDB
+- `-e NBSEARCHDB_USERNAME=your_mongodb_username`, `-e NBSEARCHDB_PASSWORD=your_mongodb_password` - Username and password of the MongoDB(if needed)
+- `-e NBSEARCHDB_DATABASE=your_database_name` - Database name in the MongoDB(default: `nbsearch`)
+- `-e NBSEARCHDB_COLLECTION=your_collection_name` - Collection name in the Database(default: `notebooks`)
+- `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
+- `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server to store MongoDB(default: `http://localhost:8888/`)
