@@ -26,6 +26,5 @@ if [[ "${NBSEARCHDB_HOSTNAME}" == "127.0.0.1" || ! -z "${NBSEARCH_UPDATE_ALL_IND
           sleep 0.1
         done
     fi
-    set +e
-    jupyter nbsearch update-index $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py --debug local
+    supervisorctl -s http://127.0.0.1:9001 start update-all-indices
 fi
