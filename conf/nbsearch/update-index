@@ -6,10 +6,6 @@ if [ ! ${file: -6} == ".ipynb" ] ; then
     exit 0
 fi
 
-if [[ $file =~ "nbsearch-tmp" ]] ; then
-    exit 0
-fi
-
 jupyter nbsearch update-index $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py --debug local $file
 echo "Updated $file $?"
 exit 0

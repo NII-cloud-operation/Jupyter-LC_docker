@@ -6,4 +6,10 @@ update_index = {
 	onMove    = "/opt/nbsearch/update-index ^d.pathname",
 }
 
+settings {
+  logfile    = "/tmp/lsyncd.log",
+  statusFile = "/tmp/lsyncd.status",
+  nodaemon   = false,
+}
+
 sync{update_index, source="/home/" .. os.getenv("NB_USER")}

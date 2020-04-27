@@ -8,3 +8,5 @@ https://literate-computing.github.io
   - このNotebook環境にインストールされたツール類の説明です
 - [02_AWS操作用ツールのインストール](02_AWS操作用ツールのインストール.ipynb)
   - AWS CLIをこのJupyter Notebook環境にインストールし、利用可能にする例です
+- [03_Notebookの検索](03_Notebookの検索.ipynb)
+  - NBSearch拡張を有効化し、Notebookの検索を行う例です

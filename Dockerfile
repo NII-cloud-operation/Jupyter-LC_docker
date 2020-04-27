@@ -133,19 +133,18 @@ RUN mkdir -p /usr/local/bin/before-notebook.d && \
     cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
 
 ### Install MongoDB and lsyncd for nbsearch
-RUN apt-get update && apt-get install -yq supervisor lsyncd uuid-runtime gnupg curl \
+RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
     && echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
     && apt-get update && apt-get install -yq mongodb-org \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /home/$NB_USER/.nbsearch/mongodb \
-    && mkdir -p /opt/nbsearch/conf.d \
-    && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-supervisor.sh \
-    && cp /tmp/nbsearch/supervisor.conf /tmp/nbsearch/mongod* /opt/nbsearch/ \
+    && mkdir -p /home/$NB_USER/.nbsearch/mongodb /opt/nbsearch \
+    && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-launch.sh \
+    && cp /tmp/nbsearch/mongod* /opt/nbsearch/ \
     && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
-    && chown $NB_USER -R /home/$NB_USER/.nbsearch /opt/nbsearch \
-    && chmod +x /usr/local/bin/before-notebook.d/nbsearch-supervisor.sh /opt/nbsearch/update-index
+    && chown $NB_USER -R /home/$NB_USER/.nbsearch \
+    && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
 
 ENV NBSEARCHDB_HOSTNAME=127.0.0.1 NBSEARCHDB_PORT=27017
 
