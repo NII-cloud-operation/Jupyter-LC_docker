@@ -68,7 +68,8 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     git+https://github.com/NII-cloud-operation/Jupyter-multi_outputs \
     git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git \
     git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git \
-    git+https://github.com/NII-cloud-operation/sidestickies.git
+    git+https://github.com/NII-cloud-operation/sidestickies.git \
+    git+https://github.com/NII-cloud-operation/nbsearch.git
 
 
 RUN jupyter contrib nbextension install --sys-prefix && \
@@ -84,6 +85,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbextension install --py lc_notebook_diff --sys-prefix && \
     jupyter nbextension install --py nbtags --sys-prefix && \
     jupyter serverextension enable --py nbtags --sys-prefix && \
+    jupyter nbextension install --py nbsearch --sys-prefix && \
+    jupyter serverextension enable --py nbsearch --sys-prefix && \
     jupyter nbextension enable nbextensions_configurator/config_menu/main --sys-prefix && \
     jupyter nbextension enable contrib_nbextensions_help_item/main --sys-prefix && \
     jupyter nbextension enable collapsible_headings/main --sys-prefix && \
@@ -128,5 +131,21 @@ RUN mkdir -p $CONDA_DIR/etc/ipython/startup/ && \
 ### Add run-hooks
 RUN mkdir -p /usr/local/bin/before-notebook.d && \
     cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
+
+### Install MongoDB and lsyncd for nbsearch
+RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
+    && echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
+    && apt-get update && apt-get install -yq mongodb-org \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /home/$NB_USER/.nbsearch/mongodb /opt/nbsearch \
+    && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-launch.sh \
+    && cp /tmp/nbsearch/mongod* /opt/nbsearch/ \
+    && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
+    && chown $NB_USER -R /home/$NB_USER/.nbsearch \
+    && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
+
+ENV NBSEARCHDB_HOSTNAME=127.0.0.1 NBSEARCHDB_PORT=27017
 
 USER $NB_USER

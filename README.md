@@ -28,6 +28,15 @@ docker run -it --rm -p 8888:8888 niicloudoperation/notebook
 
 You can login the Notebook server with the authentication token in the startup message.
 
+If you would like to use [NBSearch](https://github.com/NII-cloud-operation/nbsearch), use MongoDB container like the following:
+
+```
+docker run -d --rm --name nbsearch-mongodb mongo
+docker run -it --rm --link nbsearch-mongodb:mymongo -e NBSEARCHDB_HOSTNAME=mymongo -p 8888:8888 niicloudoperation/notebook
+```
+
+To enable the NBSearch extension, refer `03_Notebookの検索.ipynb` in the container.
+
 ## Docker Options
 
 You may customize the execution of Docker container and the Notebook server contained with the following optional arguments.
@@ -37,5 +46,26 @@ You may customize the execution of Docker container and the Notebook server cont
 - `-e PASSWORD=MY_UNBREAKABLE_PASS` - Set a initial password
 - `-v /some/host/folder/for/work:/home/jovyan` - Mounts the host directory to the working directory in the container
 
-- `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies). You can enable sidestickies extension via the Nbextensions tab.
+### Using sidestickies
+
+You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) by the following steps.
+
+- Add `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` to docker options - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies).
+- Enable the sidestickies extension via the Nbextensions tab.
 *Note: you need to enable both "Sidestickies for file tree" and "Sidestickies for notebook" nbextensions.*
+
+### Using NBSearch
+
+You can use [NBSearch](https://github.com/NII-cloud-operation/nbsearch) by enabling the NBSearch extension via the Nbextensions tab.
+After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of Jupyter.
+
+NBSearch uses MongoDB to store and search notebooks, and this image has a notebook which launch the MongoDB locally in the container.
+If you would like to use your MongoDB for NBSearch instead of the local MongoDB, set the following environment variables to the options.
+
+- `-e NBSEARCHDB_HOSTNAME=your_mongodb_hostname`, `-e NBSEARCHDB_PORT=your_mongodb_port` - Hostname and port of the MongoDB(default: `localhost:27017`)
+- `-e NBSEARCHDB_USERNAME=your_mongodb_username`, `-e NBSEARCHDB_PASSWORD=your_mongodb_password` - Username and password of the MongoDB(if needed)
+- `-e NBSEARCHDB_DATABASE=your_database_name` - Database name in the MongoDB(default: `nbsearch`)
+- `-e NBSEARCHDB_COLLECTION=your_collection_name` - Collection name in the Database(default: `notebooks`)
+- `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
+- `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
+- `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the collection of MongoDB when local files are updated automatically
