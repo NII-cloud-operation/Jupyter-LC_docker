@@ -12,4 +12,4 @@ settings {
   nodaemon   = false,
 }
 
-sync{update_index, source="/home/" .. os.getenv("NB_USER")}
+sync{update_index, source=os.getenv("NBSEARCHDB_BASE_DIR") or ("/home/" .. os.getenv("NB_USER"))}
