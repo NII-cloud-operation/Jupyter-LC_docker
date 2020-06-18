@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-latex-extra \
     texlive-fonts-extra \
     texlive-fonts-recommended \
-    texlive-generic-recommended \
+    texlive-plain-generic \
     libxrender1 \
     inkscape \
     wget \
@@ -135,7 +135,7 @@ RUN mkdir -p /usr/local/bin/before-notebook.d && \
 ### Install MongoDB and lsyncd for nbsearch
 RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
-    && echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
+    && echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
     && apt-get update && apt-get install -yq mongodb-org \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
