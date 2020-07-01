@@ -1,4 +1,4 @@
-FROM niicloudoperation/notebook@sha256:22ab0d57d8c65d3ca36ece51a4a0ea7acfe44a19bc1ee1c2b4b0a782ca6f3265
+FROM niicloudoperation/notebook@sha256:20438297076cb1997833471eba78ff50a1a5f82154d9ece0ac9a1c9a54779651
 
 USER root
 RUN rm /home/$NB_USER/*.ipynb
