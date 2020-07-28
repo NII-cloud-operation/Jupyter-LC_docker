@@ -1,0 +1,11 @@
+---
+- hosts: logstash-server
+  become: true
+
+  tasks:
+
+  - name: set_discovery_zen_ping_unicast_hosts
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*discovery\.zen\.ping\.unicast\.hosts.*:'
+      line='discovery.zen.ping.unicast.hosts: [{{groups["master-nodes"] | join(', ')}}]'

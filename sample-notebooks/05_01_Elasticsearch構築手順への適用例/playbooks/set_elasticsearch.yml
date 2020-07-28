@@ -1,0 +1,47 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+
+  - name: set_cluster-name
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*cluster\.name.*:'
+      line='cluster.name: {{cluster_name}}'
+      
+  - name: set_network-host
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*network\.host.*:'
+      line='network.host: [_site_,_local_]'
+
+  - name: set_node-master
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*node\.master.*:'
+      line="{% if 'master-nodes' in group_names %}node.master: true{% else %}node.master: false{% endif %}"
+
+  - name: set_node-data
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*node\.data.*:'
+      line="{% if 'data-nodes' in group_names %}node.data: true{% else %}node.data: false{% endif %}"
+      
+  - name: set node-ingest
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*node\.ingest.*:'
+      line="{% if 'ingest-nodes' in group_names %}node.ingest: true{% else %}node.ingest: false{% endif %}"
+
+  - name: set_discovery_zen_minimum_master_nodes
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*discovery\.zen\.minimum_master_nodes.*:'
+      line='discovery.zen.minimum_master_nodes: {{min_master_nodes}}'
+
+  - name: set_discovery_zen_ping_unicast_hosts
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp='^#*discovery\.zen\.ping\.unicast\.hosts.*:'
+      line='discovery.zen.ping.unicast.hosts: [{{groups["master-nodes"] | join(', ')}}]'

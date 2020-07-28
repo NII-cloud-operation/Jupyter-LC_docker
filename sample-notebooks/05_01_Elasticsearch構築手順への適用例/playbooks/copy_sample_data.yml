@@ -1,0 +1,9 @@
+---
+- hosts: logstash-server
+  
+  tasks:
+
+  - name: copy local sample data to remote
+    copy: >
+      src={{notebooks_home}}/sample_data/tokyo2015.csv
+      dest=~/tokyo2015.csv

@@ -1,0 +1,13 @@
+timestamp=2015-01-01T00:00:00 location=tokyo atmospheric_pressure=1000.4
+sea_level_pressure=1003.4 precipitation_day=0 precipitation_max_hour=0
+precipitation_max_10min=0 temperature_avg=3.7 temperature_max=8.2
+temperature_min=0.7 humidity_avg=41.0 humidity_min=30.0
+wind_speed_avg=4.4 wind_speed_max=9.4 wind_direction=¼
+wind_speed_max_moment=18.7 wind_direction_max_moment=–k¼
+sunshine_duration=1.3 information_daytime=X°ˆêá
+information_night=°
+timestamp=2015-01-02T00:00:00 location=tokyo atmospheric_pressure=1007.4
+sea_level_pressure=1010.4 temperature_avg=2.7 temperature_max=7.9
+temperature_min=-2.2 humidity_avg=41.0 humidity_min=19.0
+wind_speed_avg=2.1 wind_speed_max=4.2 wind_direction=¼
+wind_speed_max_moment=7.8 wind_direction_max_moment=¼ sunshine_duration=6.0 information_daytime=X°ˆêá information_night=°

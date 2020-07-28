@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+  - name: install elasticsearch 5.0.0
+    yum: 
+      name: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm
+      state: present
