@@ -12,7 +12,7 @@ Cloud Operator Days Tokyo 2020向けのデモ環境です。
 [Binder](https://mybinder.readthedocs.io/en/latest/)サービスを使用すると、手元に計算環境がなくても、この環境を試すことができます。
 以下のURLにアクセスしてください。
 
-https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo
+https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo
 <img src="./sample-notebooks/images/demo.png" align="right" width="25%" />
 
 なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
