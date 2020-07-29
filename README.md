@@ -51,7 +51,7 @@ $ docker rm codt2020
 
 このデモ環境では、Notebookという形式で、実際に自身で実行可能な運用作業の例が保存されています。
 
-* [00_デモ環境の利用方法](sample-notebooks/00_デモ環境の利用方法.ipynb)を参考に、実際に実行をしてみてください。
+[00_デモ環境の利用方法](sample-notebooks/00_デモ環境の利用方法.ipynb)を参考に、実際に実行をしてみてください。
 
 ## Literate Computingの運用への適用例
 
