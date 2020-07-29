@@ -40,8 +40,23 @@ Jupyterはもともとデータ分析用途に開発されたツールである�
 * [02_NII謹製_Jupyterの機能拡張について](02_NII謹製_Jupyterの機能拡張について.ipynb)
 
 
-## Notebookを介したコミュニケーションについて
+## Notebookを介したコミュニケーション
 
 Jupyterで行った経験を効率的に共有するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
 
 * [03_Notebookを介したコミュニケーション](03_Notebookを介したコミュニケーション.ipynb)
+
+## Notebookの検索
+
+Jupyterで実施したNotebookを効率的に検索するための機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
+
+* [04_Notebookの検索](04_Notebookの検索.ipynb)
+
+## OperationHub
+
+Jupyter Notebookを用いた運用手順を複数人で効果的に共有・管理するために、JupyterHubを拡張したOperationHubを提供しています。
+以下は、OperationHubをAWSアカウント内に構築し、試用するためのNotebookです。
+
+> AWSへのアカウント登録が必要です。また、仮想マシン等の維持には一定の料金がかかります。ご自身の責任でお試しください。
+
+* [05_OperationHubをAWSに構築](05_OperationHubをAWSに構築.ipynb)
