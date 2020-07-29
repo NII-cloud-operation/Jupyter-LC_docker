@@ -1,71 +1,88 @@
-# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Build Status](https://travis-ci.org/NII-cloud-operation/Jupyter-LC_docker.svg?branch=master)](https://travis-ci.org/NII-cloud-operation/Jupyter-LC_docker) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo)
+# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo)
 
-Jupyter Notebook server which bundles a set of tools for *Literate Computing for Reproducible Infrastructure*.  This bundle shows how to implement robust and reliable operational procedure rather than explorative procedure within Jupyter’s GUI.
+Cloud Operator Days Tokyo 2020向けのデモ環境です。
+このデモ環境ではJupyterのインタフェースを使って、運用作業の一例としてのログ分析や、我々のチームがLC4RIの実践のために開発している各種Extensionを使ってみるといった体験ができます。
 
-The goals for Literate Computing tools are:
-* Preventing miss-operation; once a cell has been executed, it “freezes” against unintended execution.  Also you can “lock” cells for unintended modification.
-* Adding a perspective into a notebook; markdown’s hierarchy is collapsible as document according to your focus.  However, embedded cells underneath are represented as dots and run through with a click as a routine procedure.
-* Enables collaborative annotation onto Jupyter Notebooks, where your ideas and communications stay in context and grow.
+# 使用方法
 
-## What it Gives You
+このデモ環境を使用する方法としては、以下の2種類があります。
 
-- Jupyter Notebook 6.0.x
-- Python3 and bash kernel with LC_wrapper https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
-- Extensions
-    - multi_outputs https://github.com/NII-cloud-operation/Jupyter-multi_outputs
-    - run_through https://github.com/NII-cloud-operation/Jupyter-LC_run_through
-    - nblineage https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
-    - index https://github.com/NII-cloud-operation/Jupyter-LC_index
-    - sidestickies https://github.com/NII-cloud-operation/sidestickies
+## Binderサービスを使用する
 
-## Basic Use
+[Binder](https://mybinder.readthedocs.io/en/latest/)サービスを使用すると、手元に計算環境がなくても、この環境を試すことができます。
+以下のURLにアクセスしてください。
 
-You can start the Notebook server on port 8888 with the following command.
+https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo
+<img src="./sample-notebooks/images/demo.png" align="right" width="25%" />
 
-```
-docker run -it --rm -p 8888:8888 niicloudoperation/notebook
-```
+なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
 
-You can login the Notebook server with the authentication token in the startup message.
+## Dockerを使用する
 
-If you would like to use [NBSearch](https://github.com/NII-cloud-operation/nbsearch), use MongoDB container like the following:
+手元にDocker環境がある場合は、以下のコマンドでデモ環境を利用することができます。
 
 ```
-docker run -d --rm --name nbsearch-mongodb mongo
-docker run -it --rm --link nbsearch-mongodb:mymongo -e NBSEARCHDB_HOSTNAME=mymongo -p 8888:8888 niicloudoperation/notebook
+$ docker run -d -p 8888:8888 --name codt2020 yacchin1205/notebook:codt2020-demo
 ```
 
-To enable the NBSearch extension, refer `03_Notebookの検索.ipynb` in the container.
+特にエラーなどが表示されなければ、ブラウザで http://localhost:8888 を開きます。PasswordかTokenと求められますので、
 
-## Docker Options
+```
+$ docker logs codt2020
+```
 
-You may customize the execution of Docker container and the Notebook server contained with the following optional arguments.
+で、 `http://127.0.0.1:8888/?token=(トークン)` という出力が得られるはずですので、このトークンを入力します。
+コンテナを停止・削除したい場合は、
 
-- `-e lc_wrapper_force=on` - Force summarizing mode of lc_wrapper (via env)
-- `-e TZ=JST-9` - Specify the container timezone
-- `-e PASSWORD=MY_UNBREAKABLE_PASS` - Set a initial password
-- `-v /some/host/folder/for/work:/home/jovyan` - Mounts the host directory to the working directory in the container
+```
+$ docker stop codt2020
+$ docker rm codt2020
+```
 
-### Using sidestickies
+としてください。詳しくは、Dockerコマンドラインのドキュメントを参照してください。
 
-You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) by the following steps.
+> <span style='background-color:mistyrose;'> **デモ環境を体験するに際して、 [Binder](https://mybinder.readthedocs.io/en/latest/) および [Scrapbox](https://scrapbox.io/product/) の利用規約は各自で確認ください。** </span>
 
-- Add `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` to docker options - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies).
-- Enable the sidestickies extension via the Nbextensions tab.
-*Note: you need to enable both "Sidestickies for file tree" and "Sidestickies for notebook" nbextensions.*
+<span style='background-color:mistyrose;'> 質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！</span>
 
-### Using NBSearch
+# デモとして提供するNotebook
 
-You can use [NBSearch](https://github.com/NII-cloud-operation/nbsearch) by enabling the NBSearch extension via the Nbextensions tab.
-After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of Jupyter.
+## Notebookの実行方法
 
-NBSearch uses MongoDB to store and search notebooks, and this image has a notebook which launch the MongoDB locally in the container.
-If you would like to use your MongoDB for NBSearch instead of the local MongoDB, set the following environment variables to the options.
+このデモ環境では、Notebookという形式で、実際に自身で実行可能な運用作業の例が保存されています。
 
-- `-e NBSEARCHDB_HOSTNAME=your_mongodb_hostname`, `-e NBSEARCHDB_PORT=your_mongodb_port` - Hostname and port of the MongoDB(default: `localhost:27017`)
-- `-e NBSEARCHDB_USERNAME=your_mongodb_username`, `-e NBSEARCHDB_PASSWORD=your_mongodb_password` - Username and password of the MongoDB(if needed)
-- `-e NBSEARCHDB_DATABASE=your_database_name` - Database name in the MongoDB(default: `nbsearch`)
-- `-e NBSEARCHDB_COLLECTION=your_collection_name` - Collection name in the Database(default: `notebooks`)
-- `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
-- `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
-- `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the collection of MongoDB when local files are updated automatically
+* [00_デモ環境の利用方法](sample-notebooks/00_デモ環境の利用方法.ipynb)を参考に、実際に実行をしてみてください。
+
+## Literate Computingの運用への適用例
+
+運用への適用例の一つとして、ログを分析する手順を記述したNotebookを体感いただけます。
+
+* [01_Literate_Computingの運用への適用例](sample-notebooks/01_Literate_Computingの運用への適用例.ipynb)
+
+
+## NII謹製Literate Computing機能拡張
+Jupyterはもともとデータ分析用途に開発されたツールであるため、インフラの運用に適用するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
+
+* [02_NII謹製_Jupyterの機能拡張について](sample-notebooks/02_NII謹製_Jupyterの機能拡張について.ipynb)
+
+
+## Notebookを介したコミュニケーション
+
+Jupyterで行った経験を効率的に共有するためにいくつかの機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
+
+* [03_Notebookを介したコミュニケーション](sample-notebooks/03_Notebookを介したコミュニケーション.ipynb)
+
+## Notebookの検索
+
+Jupyterで実施したNotebookを効率的に検索するための機能拡張を施しています。以下は、その内容をご紹介するNotebookです。
+
+* [04_Notebookの検索](sample-notebooks/04_Notebookの検索.ipynb)
+
+## OperationHub
+
+Jupyter Notebookを用いた運用手順を複数人で効果的に共有・管理するために、JupyterHubを拡張したOperationHubを提供しています。
+以下は、OperationHubをAWSアカウント内に構築し、試用するためのNotebookです。
+
+> AWSへのアカウント登録が必要です。また、仮想マシン等の維持には一定の料金がかかります。ご自身の責任でお試しください。
+
+* [05_OperationHubをAWSに構築](sample-notebooks/05_OperationHubをAWSに構築.ipynb)
