@@ -69,3 +69,4 @@ If you would like to use your MongoDB for NBSearch instead of the local MongoDB,
 - `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
 - `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
 - `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the collection of MongoDB when local files are updated automatically
+- `-e NBSEARCHDB_UPDATE_INDEX_OPT` - Options for the `update-index` NBSearch command invoked by the lsyncd process
