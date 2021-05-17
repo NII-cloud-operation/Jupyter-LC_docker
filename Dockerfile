@@ -133,10 +133,18 @@ RUN mkdir -p /usr/local/bin/before-notebook.d && \
     cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
 
 ### Install MongoDB and lsyncd for nbsearch
+### based on https://github.com/docker-library/mongo/tree/master/4.4
+ENV MONGO_MAJOR 4.4
+ENV MONGO_VERSION 4.4.5
 RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5 \
-    && echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list \
-    && apt-get update && apt-get install -yq mongodb-org \
+    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 20691EEC35216C63CAF66CE1656408E390CFB1F5 \
+    && echo "deb http://repo.mongodb.org/apt/ubuntu focal/mongodb-org/${MONGO_MAJOR} multiverse" | tee /etc/apt/sources.list.d/mongodb-org.list \
+    && apt-get update && apt-get install -y \
+            mongodb-org=$MONGO_VERSION \
+            mongodb-org-server=$MONGO_VERSION \
+            mongodb-org-shell=$MONGO_VERSION \
+            mongodb-org-mongos=$MONGO_VERSION \
+            mongodb-org-tools=$MONGO_VERSION \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /home/$NB_USER/.nbsearch/mongodb /opt/nbsearch \
