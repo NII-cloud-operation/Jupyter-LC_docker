@@ -1,4 +1,4 @@
-FROM niicloudoperation/notebook@sha256:8b0a644cc3cb72923db97ebbfb563f6cdb9b3b75d635eb30cc8e1286ce5ef4b8
+FROM niicloudoperation/notebook@sha256:886f0e7caf53d684d822c4b87e7057fb58c53d6ba881e59ab21a31e78c02b738
 
 USER root
 
