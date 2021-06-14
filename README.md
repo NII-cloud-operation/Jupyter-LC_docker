@@ -1,6 +1,6 @@
-# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo)
+# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-2021-demo)
 
-Cloud Operator Days Tokyo 2020向けのデモ環境です。
+NII OpenHouse 2021向けのデモ環境です。
 このデモ環境ではJupyterのインタフェースを使って、運用作業の一例としてのログ分析や、我々のチームがLC4RIの実践のために開発している各種Extensionを使ってみるといった体験ができます。
 
 # 使用方法
@@ -12,8 +12,8 @@ Cloud Operator Days Tokyo 2020向けのデモ環境です。
 [Binder](https://mybinder.readthedocs.io/en/latest/)サービスを使用すると、手元に計算環境がなくても、この環境を試すことができます。
 以下のURLにアクセスしてください。
 
-https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo
-<img src="./sample-notebooks/images/demo.png" align="right" width="25%" />
+https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-2021-demo
+<img src="./sample-notebooks/images/demo.png" align="right" width="30%" />
 
 なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
 
@@ -22,21 +22,21 @@ https://mybinder.org/v2/gh/yacchin1205/Jupyter-LC_docker/codt2020-demo
 手元にDocker環境がある場合は、以下のコマンドでデモ環境を利用することができます。
 
 ```
-$ docker run -d -p 8888:8888 --name codt2020 yacchin1205/notebook:codt2020-demo
+$ docker run -d -p 8888:8888 --name demo niicloudoperation/notebook:openhouse-2021-demo
 ```
 
-特にエラーなどが表示されなければ、ブラウザで http://localhost:8888 を開きます。PasswordかTokenと求められますので、
+特にエラーなどが表示されなければ、ブラウザで http://localhost:8888 を開きます。PasswordかTokenを求められますので、
 
 ```
-$ docker logs codt2020
+$ docker logs demo
 ```
 
-で、 `http://127.0.0.1:8888/?token=(トークン)` という出力が得られるはずですので、このトークンを入力します。
+上記のコマンドにより、 `http://127.0.0.1:8888/?token=(トークン)` という出力が得られますので、このトークンを入力します。
 コンテナを停止・削除したい場合は、
 
 ```
-$ docker stop codt2020
-$ docker rm codt2020
+$ docker stop demo
+$ docker rm demo
 ```
 
 としてください。詳しくは、Dockerコマンドラインのドキュメントを参照してください。
