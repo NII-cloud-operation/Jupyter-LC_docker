@@ -156,4 +156,7 @@ RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
 
 ENV NBSEARCHDB_HOSTNAME=127.0.0.1 NBSEARCHDB_PORT=27017
 
+# Make classic notebook the default
+ENV DOCKER_STACKS_JUPYTER_CMD=notebook
+
 USER $NB_USER
