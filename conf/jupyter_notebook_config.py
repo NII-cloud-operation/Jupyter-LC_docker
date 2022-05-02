@@ -20,27 +20,43 @@ if 'SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID' in os.environ:
 if 'SIDESTICKIES_SCRAPBOX_PROJECT_ID' in os.environ:
     c.ScrapboxAPI.project_id = os.environ['SIDESTICKIES_SCRAPBOX_PROJECT_ID']
 
-if 'NBSEARCHDB_HOSTNAME' in os.environ:
-    c.NBSearchDB.hostname = os.environ['NBSEARCHDB_HOSTNAME']
+if 'NBSEARCHDB_SOLR_BASE_URL' in os.environ:
+    c.NBSearchDB.solr_base_url = os.environ['NBSEARCHDB_SOLR_BASE_URL']
 
-if 'NBSEARCHDB_PORT' in os.environ:
-    c.NBSearchDB.port = int(os.environ['NBSEARCHDB_PORT'])
+if 'NBSEARCHDB_S3_ENDPOINT_URL' in os.environ:
+    c.NBSearchDB.s3_endpoint_url = os.environ['NBSEARCHDB_S3_ENDPOINT_URL']
 
-if 'NBSEARCHDB_DATABASE' in os.environ:
-    c.NBSearchDB.database = os.environ['NBSEARCHDB_DATABASE']
-    del os.environ['NBSEARCHDB_DATABASE']
+if 'NBSEARCHDB_SOLR_BASIC_AUTH_USERNAME' in os.environ:
+    c.NBSearchDB.solr_basic_auth_username = os.environ['NBSEARCHDB_SOLR_BASIC_AUTH_USERNAME']
+    del os.environ['NBSEARCHDB_SOLR_BASIC_AUTH_USERNAME']
 
-if 'NBSEARCHDB_COLLECTION' in os.environ:
-    c.NBSearchDB.collection = os.environ['NBSEARCHDB_COLLECTION']
-    del os.environ['NBSEARCHDB_COLLECTION']
+if 'NBSEARCHDB_SOLR_BASIC_AUTH_PASSWORD' in os.environ:
+    c.NBSearchDB.solr_basic_auth_password = os.environ['NBSEARCHDB_SOLR_BASIC_AUTH_PASSWORD']
+    del os.environ['NBSEARCHDB_SOLR_BASIC_AUTH_PASSWORD']
 
-if 'NBSEARCHDB_USERNAME' in os.environ:
-    c.NBSearchDB.username = os.environ['NBSEARCHDB_USERNAME']
-    del os.environ['NBSEARCHDB_USERNAME']
+if 'NBSEARCHDB_SOLR_NOTEBOOK' in os.environ:
+    c.NBSearchDB.solr_notebook = os.environ['NBSEARCHDB_SOLR_NOTEBOOK']
+    del os.environ['NBSEARCHDB_SOLR_NOTEBOOK']
 
-if 'NBSEARCHDB_PASSWORD' in os.environ:
-    c.NBSearchDB.password = os.environ['NBSEARCHDB_PASSWORD']
-    del os.environ['NBSEARCHDB_PASSWORD']
+if 'NBSEARCHDB_SOLR_CELL' in os.environ:
+    c.NBSearchDB.solr_cell = os.environ['NBSEARCHDB_SOLR_CELL']
+    del os.environ['NBSEARCHDB_SOLR_CELL']
+
+if 'NBSEARCHDB_S3_ACCESS_KEY' in os.environ:
+    c.NBSearchDB.s3_access_key = os.environ['NBSEARCHDB_S3_ACCESS_KEY']
+    del os.environ['NBSEARCHDB_S3_ACCESS_KEY']
+
+if 'NBSEARCHDB_S3_SECRET_KEY' in os.environ:
+    c.NBSearchDB.s3_secret_key = os.environ['NBSEARCHDB_S3_SECRET_KEY']
+    del os.environ['NBSEARCHDB_S3_SECRET_KEY']
+
+if 'NBSEARCHDB_S3_REGION_NAME' in os.environ:
+    c.NBSearchDB.s3_region_name = os.environ['NBSEARCHDB_S3_REGION_NAME']
+    del os.environ['NBSEARCHDB_S3_REGION_NAME']
+
+if 'NBSEARCHDB_S3_BUCKET_NAME' in os.environ:
+    c.NBSearchDB.s3_bucket_name = os.environ['NBSEARCHDB_S3_BUCKET_NAME']
+    del os.environ['NBSEARCHDB_S3_BUCKET_NAME']
 
 c.LocalSource.base_dir = os.environ['NBSEARCHDB_BASE_DIR'] \
                          if 'NBSEARCHDB_BASE_DIR' in os.environ else \

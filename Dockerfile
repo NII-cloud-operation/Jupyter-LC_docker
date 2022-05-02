@@ -132,29 +132,14 @@ RUN mkdir -p $CONDA_DIR/etc/ipython/startup/ && \
 RUN mkdir -p /usr/local/bin/before-notebook.d && \
     cp /tmp/ssh-agent.sh /usr/local/bin/before-notebook.d/
 
-### Install MongoDB and lsyncd for nbsearch
-### based on https://github.com/docker-library/mongo/tree/master/4.4
-ENV MONGO_MAJOR 4.4
-ENV MONGO_VERSION 4.4.5
-RUN apt-get update && apt-get install -yq lsyncd uuid-runtime gnupg curl \
-    && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 20691EEC35216C63CAF66CE1656408E390CFB1F5 \
-    && echo "deb http://repo.mongodb.org/apt/ubuntu focal/mongodb-org/${MONGO_MAJOR} multiverse" | tee /etc/apt/sources.list.d/mongodb-org.list \
-    && apt-get update && apt-get install -y \
-            mongodb-org=$MONGO_VERSION \
-            mongodb-org-server=$MONGO_VERSION \
-            mongodb-org-shell=$MONGO_VERSION \
-            mongodb-org-mongos=$MONGO_VERSION \
-            mongodb-org-tools=$MONGO_VERSION \
+### Install lsyncd for nbsearch
+RUN apt-get update && apt-get install -yq lsyncd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /home/$NB_USER/.nbsearch/mongodb /opt/nbsearch \
+    && mkdir -p /opt/nbsearch \
     && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-launch.sh \
-    && cp /tmp/nbsearch/mongod* /opt/nbsearch/ \
     && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
-    && chown $NB_USER -R /home/$NB_USER/.nbsearch \
     && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
-
-ENV NBSEARCHDB_HOSTNAME=127.0.0.1 NBSEARCHDB_PORT=27017
 
 # Make classic notebook the default
 ENV DOCKER_STACKS_JUPYTER_CMD=notebook

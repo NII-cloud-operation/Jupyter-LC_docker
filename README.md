@@ -17,6 +17,7 @@ The goals for Literate Computing tools are:
     - nblineage https://github.com/NII-cloud-operation/Jupyter-LC_nblineage
     - index https://github.com/NII-cloud-operation/Jupyter-LC_index
     - sidestickies https://github.com/NII-cloud-operation/sidestickies
+    - nbsearch https://github.com/NII-cloud-operation/nbsearch
 
 ## Basic Use
 
@@ -28,11 +29,25 @@ docker run -it --rm -p 8888:8888 niicloudoperation/notebook
 
 You can login the Notebook server with the authentication token in the startup message.
 
-If you would like to use [NBSearch](https://github.com/NII-cloud-operation/nbsearch), use MongoDB container like the following:
+If you would like to use [NBSearch](https://github.com/NII-cloud-operation/nbsearch), use Solr container like the following:
 
 ```
-docker run -d --rm --name nbsearch-mongodb mongo
-docker run -it --rm --link nbsearch-mongodb:mymongo -e NBSEARCHDB_HOSTNAME=mymongo -p 8888:8888 niicloudoperation/notebook
+# Launch Solr
+git clone https://github.com/NII-cloud-operation/nbsearch /tmp/nbsearch
+docker run -d --name nbsearch-solr -v /tmp/nbsearch:/tmp/nbsearch --rm solr:8 \
+    bash -c "precreate-core jupyter-notebook /tmp/nbsearch/solr/jupyter-notebook/ && \
+        precreate-core jupyter-cell /tmp/nbsearch/solr/jupyter-cell/ && \
+        solr-foreground"
+
+# Launch MinIO
+docker run -d --rm -e MINIO_ACCESS_KEY=nbsearchak -e MINIO_SECRET_KEY=nbsearchsk \
+    --name nbsearch-minio minio/minio:latest server /data --compat
+
+# Launch Notebook
+docker run -it --rm --link nbsearch-solr:solr --link nbsearch-minio:minio \
+    -e NBSEARCHDB_SOLR_BASE_URL=http://solr:8983 -e NBSEARCHDB_S3_ENDPOINT_URL=http://minio:9000 \
+    -e NBSEARCHDB_S3_ACCESS_KEY=nbsearchak -e NBSEARCHDB_S3_SECRET_KEY=nbsearchsk \
+    -p 8888:8888 niicloudoperation/notebook
 ```
 
 To enable the NBSearch extension, refer `03_Notebookの検索.ipynb` in the container.
@@ -59,14 +74,18 @@ You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) 
 You can use [NBSearch](https://github.com/NII-cloud-operation/nbsearch) by enabling the NBSearch extension via the Nbextensions tab.
 After the page of Jupyter is reloaded, the `NBSearch` tab appears on the page of Jupyter.
 
-NBSearch uses MongoDB to store and search notebooks, and this image has a notebook which launch the MongoDB locally in the container.
-If you would like to use your MongoDB for NBSearch instead of the local MongoDB, set the following environment variables to the options.
+NBSearch uses Solr and S3 Compatible Storage to store and search notebooks.
+You will be able to use NBSearch once you set up your Solr and S3 compatible storage configurations, set the following environment variables to the options.
 
-- `-e NBSEARCHDB_HOSTNAME=your_mongodb_hostname`, `-e NBSEARCHDB_PORT=your_mongodb_port` - Hostname and port of the MongoDB(default: `localhost:27017`)
-- `-e NBSEARCHDB_USERNAME=your_mongodb_username`, `-e NBSEARCHDB_PASSWORD=your_mongodb_password` - Username and password of the MongoDB(if needed)
-- `-e NBSEARCHDB_DATABASE=your_database_name` - Database name in the MongoDB(default: `nbsearch`)
-- `-e NBSEARCHDB_COLLECTION=your_collection_name` - Collection name in the Database(default: `notebooks`)
+- `-e NBSEARCHDB_SOLR_BASE_URL=your_solr_url` - The base URL of Solr(default: `http://localhost:8983`)
+- `-e NBSEARCHDB_SOLR_BASIC_AUTH_USERNAME=your_solr_username`, `-e NBSEARCHDB_SOLR_BASIC_AUTH_PASSWORD=your_solr_password` - The username and password for Solr(if needed)
+- `-e NBSEARCHDB_S3_ENDPOINT_URL=your_database_name` - The URL of S3(default: http://localhost:9000)
+- `-e NBSEARCHDB_S3_ACCESS_KEY=your_s3_access_key`, `-e NBSEARCHDB_S3_SECRET_KEY=your_s3_secret_key` - The access key and secret key for S3(required)
+- `-e NBSEARCHDB_S3_REGION_NAME=your_s3_region_name` - The region name of S3(if needed)
+- `-e NBSEARCHDB_S3_BUCKET_NAME=your_s3_bucket_name` - The bucket on S3(required)
+- `-e NBSEARCHDB_SOLR_NOTEBOOK=your_solr_notebook_core` - The core for notebooks on Solr(default: `jupyter-notebook`)
+- `-e NBSEARCHDB_SOLR_CELL=your_solr_cell_core` - The core for cells on Solr(default: `jupyter-cell`)
 - `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
 - `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
-- `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the collection of MongoDB when local files are updated automatically
+- `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the index of Solr when local files are updated automatically
 - `-e NBSEARCHDB_UPDATE_INDEX_OPT` - Options for the `update-index` NBSearch command invoked by the lsyncd process
