@@ -1,6 +1,6 @@
-# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-2021-demo)
+# Jupyter Notebook for *Literate Computing for Reproducible Infrastructure* [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-demo?urlpath=tree)
 
-NII OpenHouse 2021向けのデモ環境です。
+NII OpenHouse向けのデモ環境です。
 このデモ環境ではJupyterのインタフェースを使って、運用作業の一例としてのログ分析や、我々のチームがLC4RIの実践のために開発している各種Extensionを使ってみるといった体験ができます。
 
 # 使用方法
@@ -12,7 +12,7 @@ NII OpenHouse 2021向けのデモ環境です。
 [Binder](https://mybinder.readthedocs.io/en/latest/)サービスを使用すると、手元に計算環境がなくても、この環境を試すことができます。
 以下のURLにアクセスしてください。
 
-https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-2021-demo
+https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-demo?urlpath=tree
 <img src="./sample-notebooks/images/demo.png" align="right" width="30%" />
 
 なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
@@ -22,7 +22,7 @@ https://mybinder.org/v2/gh/NII-cloud-operation/Jupyter-LC_docker/openhouse-2021-
 手元にDocker環境がある場合は、以下のコマンドでデモ環境を利用することができます。
 
 ```
-$ docker run -d -p 8888:8888 --name demo niicloudoperation/notebook:openhouse-2021-demo
+$ docker run -d -p 8888:8888 --name demo niicloudoperation/notebook:openhouse-demo
 ```
 
 特にエラーなどが表示されなければ、ブラウザで http://localhost:8888 を開きます。PasswordかTokenを求められますので、
