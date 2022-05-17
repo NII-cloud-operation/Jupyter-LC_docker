@@ -1,9 +1,0 @@
----
-- hosts: logstash-server
-  become: true
-
-  tasks:
-  - name: install logstash 5.0.0
-    yum: 
-      name: https://artifacts.elastic.co/downloads/logstash/logstash-5.0.0.rpm
-      state: present
