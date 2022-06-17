@@ -36,7 +36,8 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
     apt-get -y install sshpass openssl ipmitool libssl-dev libffi-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    pip --no-cache-dir install requests paramiko ansible
+    conda install --quiet --yes requests paramiko ansible && \
+    conda clean --all -f -y
 
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
