@@ -112,7 +112,7 @@ RUN fix-permissions /home/$NB_USER
 RUN cp /tmp/bash_env /etc/bash_env
 
 ### Theme for jupyter
-RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/static/custom && \
+RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/nbclassic/static/custom && \
     cat /tmp/custom.css >> $CUSTOM_DIR/custom.css && \
     cp /tmp/logo.png $CUSTOM_DIR/logo.png && \
     mkdir -p $CUSTOM_DIR/codemirror/addon/merge/ && \
