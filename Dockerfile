@@ -75,24 +75,24 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
 
 RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nblineage quick-setup --sys-prefix && \
-    jupyter nbextension install --py lc_run_through --sys-prefix && \
-    jupyter nbextension enable --py lc_run_through --sys-prefix && \
-    jupyter nbextension install --py lc_multi_outputs --sys-prefix && \
-    jupyter nbextension enable --py lc_multi_outputs --sys-prefix && \
-    jupyter nbextension install --py notebook_index --sys-prefix && \
-    jupyter nbextension enable --py notebook_index --sys-prefix && \
-    jupyter nbextension install --py lc_wrapper --sys-prefix && \
-    jupyter nbextension enable --py lc_wrapper --sys-prefix && \
-    jupyter nbextension install --py lc_notebook_diff --sys-prefix && \
-    jupyter nbextension install --py nbtags --sys-prefix && \
-    jupyter serverextension enable --py nbtags --sys-prefix && \
-    jupyter nbextension install --py nbsearch --sys-prefix && \
-    jupyter serverextension enable --py nbsearch --sys-prefix && \
-    jupyter nbextension enable nbextensions_configurator/config_menu/main --sys-prefix && \
-    jupyter nbextension enable contrib_nbextensions_help_item/main --sys-prefix && \
-    jupyter nbextension enable collapsible_headings/main --sys-prefix && \
-    jupyter nbextension enable toc2/main --sys-prefix && \
-    jupyter nbextension enable dragdrop/main --sys-prefix && \
+    jupyter nbclassic-extension install --py lc_run_through --sys-prefix && \
+    jupyter nbclassic-extension enable --py lc_run_through --sys-prefix && \
+    jupyter nbclassic-extension install --py lc_multi_outputs --sys-prefix && \
+    jupyter nbclassic-extension enable --py lc_multi_outputs --sys-prefix && \
+    jupyter nbclassic-extension install --py notebook_index --sys-prefix && \
+    jupyter nbclassic-extension enable --py notebook_index --sys-prefix && \
+    jupyter nbclassic-extension install --py lc_wrapper --sys-prefix && \
+    jupyter nbclassic-extension enable --py lc_wrapper --sys-prefix && \
+    jupyter nbclassic-extension install --py lc_notebook_diff --sys-prefix && \
+    jupyter nbclassic-extension install --py nbtags --sys-prefix && \
+    jupyter nbclassic-serverextension enable --py nbtags --sys-prefix && \
+    jupyter nbclassic-extension install --py nbsearch --sys-prefix && \
+    jupyter nbclassic-serverextension enable --py nbsearch --sys-prefix && \
+    jupyter nbclassic-extension enable nbextensions_configurator/config_menu/main --sys-prefix && \
+    jupyter nbclassic-extension enable contrib_nbextensions_help_item/main --sys-prefix && \
+    jupyter nbclassic-extension enable collapsible_headings/main --sys-prefix && \
+    jupyter nbclassic-extension enable toc2/main --sys-prefix && \
+    jupyter nbclassic-extension enable dragdrop/main --sys-prefix && \
     python -m bash_kernel.install --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/python3-wrapper --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/bash-wrapper --sys-prefix && \
@@ -112,7 +112,7 @@ RUN fix-permissions /home/$NB_USER
 RUN cp /tmp/bash_env /etc/bash_env
 
 ### Theme for jupyter
-RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/static/custom && \
+RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/nbclassic/static/custom && \
     cat /tmp/custom.css >> $CUSTOM_DIR/custom.css && \
     cp /tmp/logo.png $CUSTOM_DIR/logo.png && \
     mkdir -p $CUSTOM_DIR/codemirror/addon/merge/ && \
