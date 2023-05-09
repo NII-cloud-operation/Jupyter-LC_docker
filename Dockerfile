@@ -143,6 +143,6 @@ RUN apt-get update && apt-get install -yq lsyncd \
     && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
 
 # Make classic notebook the default
-ENV DOCKER_STACKS_JUPYTER_CMD=notebook
+ENV DOCKER_STACKS_JUPYTER_CMD=nbclassic
 
 USER $NB_USER
