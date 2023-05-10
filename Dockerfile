@@ -52,6 +52,10 @@ RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
 #### Visualization
 RUN pip --no-cache-dir install folium
 
+### Workaround: Jupyter Notebook ‘zmq message arrived on closed channel’ Error
+### https://github.com/jupyter/notebook/issues/6721
+RUN pip --no-cache-dir install --upgrade "pyzmq<25" "jupyter_client<8"
+
 ### extensions for jupyter
 #### jupyter_nbextensions_configurator
 #### jupyter_contrib_nbextensions
