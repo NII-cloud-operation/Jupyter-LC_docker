@@ -88,7 +88,9 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbclassic-serverextension enable --py nbtags --sys-prefix && \
     jupyter nbclassic-extension install --py nbsearch --sys-prefix && \
     jupyter nbclassic-serverextension enable --py nbsearch --sys-prefix && \
-    jupyter nbclassic-extension enable nbextensions_configurator/config_menu/main --sys-prefix && \
+    jupyter nbclassic-extension install --py jupyter_nbextensions_configurator --sys-prefix && \
+    jupyter nbclassic-extension enable --py jupyter_nbextensions_configurator --sys-prefix && \
+    jupyter nbclassic-serverextension enable --py jupyter_nbextensions_configurator --sys-prefix && \
     jupyter nbclassic-extension enable contrib_nbextensions_help_item/main --sys-prefix && \
     jupyter nbclassic-extension enable collapsible_headings/main --sys-prefix && \
     jupyter nbclassic-extension enable toc2/main --sys-prefix && \
