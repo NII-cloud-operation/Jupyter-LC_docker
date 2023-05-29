@@ -98,7 +98,6 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbclassic-extension enable contrib_nbextensions_help_item/main --sys-prefix && \
     jupyter nbclassic-extension enable collapsible_headings/main --sys-prefix && \
     jupyter nbclassic-extension enable toc2/main --sys-prefix && \
-    jupyter nbclassic-extension enable dragdrop/main --sys-prefix && \
     python -m bash_kernel.install --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/python3-wrapper --sys-prefix && \
     jupyter kernelspec install /tmp/kernels/bash-wrapper --sys-prefix && \
