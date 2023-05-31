@@ -1,0 +1,3 @@
+[submodule "nbsearch"]
+	path = nbsearch
+	url = https://github.com/NII-cloud-operation/nbsearch.git

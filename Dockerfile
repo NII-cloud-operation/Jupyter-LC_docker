@@ -1,6 +1,6 @@
 FROM solr:8 AS solr
 
-FROM niicloudoperation/notebook@sha256:0cea38c94fd35ad4847b41c82568bcc06cce8c782925d5489020c9736ceb0f35
+FROM niicloudoperation/notebook:latest
 
 USER root
 
@@ -31,7 +31,7 @@ RUN mkdir -p /opt/minio/bin/ && \
     curl -L https://dl.min.io/server/minio/release/linux-amd64/minio > /opt/minio/bin/minio && \
     chmod +x /opt/minio/bin/minio && mkdir -p /var/minio && chown jovyan:users -R /var/minio
 
-RUN rm -fr /tmp/nbsearch && git clone https://github.com/NII-cloud-operation/nbsearch.git /tmp/nbsearch
+COPY ./nbsearch /tmp/nbsearch
 RUN pip install /tmp/nbsearch jupyter_nbextensions_configurator jupyter-server-proxy && \
     jupyter serverextension enable --sys-prefix jupyter_server_proxy
 RUN mkdir -p /usr/local/bin/before-notebook.d && \
@@ -44,11 +44,16 @@ RUN mkdir -p /usr/local/bin/before-notebook.d && \
 
 # Boot scripts to perform /usr/local/bin/before-notebook.d/* on JupyterHub
 RUN mkdir -p /opt/nbsearch/original/bin/ && \
+    mkdir -p /opt/nbsearch/bin/ && \
     mv /opt/conda/bin/jupyterhub-singleuser /opt/nbsearch/original/bin/jupyterhub-singleuser && \
     mv /opt/conda/bin/jupyter-notebook /opt/nbsearch/original/bin/jupyter-notebook && \
+    mv /opt/conda/bin/jupyter-lab /opt/nbsearch/original/bin/jupyter-lab && \
     cp /tmp/nbsearch/example/jupyterhub-singleuser /opt/conda/bin/ && \
     cp /tmp/nbsearch/example/jupyter-notebook /opt/conda/bin/ && \
-    chmod +x /opt/conda/bin/jupyterhub-singleuser /opt/conda/bin/jupyter-notebook
+    cp /tmp/nbsearch/example/jupyter-lab /opt/conda/bin/ && \
+    cp /tmp/nbsearch/example/run-hook.sh /opt/nbsearch/bin/ && \
+    chmod +x /opt/conda/bin/jupyterhub-singleuser /opt/conda/bin/jupyter-notebook /opt/conda/bin/jupyter-lab \
+        /opt/nbsearch/bin/run-hook.sh
 
 # Configuration for Server Proxy
 RUN cat /tmp/nbsearch/example/jupyter_notebook_config.py >> $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py
@@ -56,13 +61,13 @@ RUN cat /tmp/nbsearch/example/jupyter_notebook_config.py >> $CONDA_DIR/etc/jupyt
 
 # Tools for DEMO Notebooks
 RUN pip --no-cache-dir install git+https://github.com/yacchin1205/apachelog.git@feature/python3
-RUN conda install --quiet --yes awscli passlib && conda clean --all -f -y
+RUN mamba install --quiet --yes awscli passlib && mamba clean --all -f -y
 RUN apt-get update && apt-get install -y expect && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN rm /home/$NB_USER/*.ipynb
 
-RUN jupyter nbextension enable --py nbtags --sys-prefix
+RUN jupyter nbclassic-extension enable --py nbtags --sys-prefix
 ENV SIDESTICKIES_SCRAPBOX_PROJECT_ID sidestickies-public
 USER $NB_USER
 
@@ -78,7 +83,7 @@ RUN mkdir /home/$NB_USER/.nbsearch/conf.d && \
 RUN precreate-core jupyter-notebook /opt/nbsearch/solr/jupyter-notebook/ && \
     precreate-core jupyter-cell /opt/nbsearch/solr/jupyter-cell/
 
-RUN jupyter serverextension enable --py --user nbsearch && \
-    jupyter nbextension enable --py --user nbsearch && \
-    jupyter nbextension enable --py --user lc_notebook_diff
+RUN jupyter nbclassic-serverextension enable --py --user nbsearch && \
+    jupyter nbclassic-extension enable --py --user nbsearch && \
+    jupyter nbclassic-extension enable --py --user lc_notebook_diff
 # <-- for nbsearch
