@@ -65,3 +65,14 @@ c.LocalSource.base_dir = os.environ['NBSEARCHDB_BASE_DIR'] \
 c.LocalSource.server = os.environ['NBSEARCHDB_MY_SERVER_URL'] \
                        if 'NBSEARCHDB_MY_SERVER_URL' in os.environ else \
                        'http://localhost:8888/'
+
+if 'NBWHISPER_SKYWAY_API_TOKEN' in os.environ:
+    c.NBWhisper.skyway_api_token = os.environ['NBWHISPER_SKYWAY_API_TOKEN']
+    # Secrets removed from environment variables
+    del os.environ['NBWHISPER_SKYWAY_API_TOKEN']
+
+if 'NBWHISPER_ROOM_MODE_FOR_WAITING_ROOM' in os.environ:
+    c.NBWhisper.room_mode_for_waiting_room = os.environ['NBWHISPER_ROOM_MODE_FOR_WAITING_ROOM']
+
+if 'NBWHISPER_ROOM_MODE_FOR_TALKING_ROOM' in os.environ:
+    c.NBWhisper.room_mode_for_talking_room = os.environ['NBWHISPER_ROOM_MODE_FOR_TALKING_ROOM']
