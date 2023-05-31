@@ -89,3 +89,14 @@ You will be able to use NBSearch once you set up your Solr and S3 compatible sto
 - `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
 - `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the index of Solr when local files are updated automatically
 - `-e NBSEARCHDB_UPDATE_INDEX_OPT` - Options for the `update-index` NBSearch command invoked by the lsyncd process
+
+### Using NBWhisper
+
+You can use [NBWhisper](https://github.com/NII-cloud-operation/nbwhisper) by enabling the NBWhisper extension via the Nbextensions tab.
+
+To use NBWhisper, you need an API token of the SkyWay (WebRTC) service. It can be specified from environment variables as follows.
+(For more information, see https://github.com/NII-cloud-operation/nbwhisper/ .)
+
+- `-e NBWHISPER_SKYWAY_API_TOKEN` - An api token for SkyWay. This nbextension is not compatible with new SkyWay service, but old one. You can get an api token from your old SkyWay admin page. https://console-webrtc-free.ecl.ntt.com/users/login
+- `-e NBWHISPER_ROOM_MODE_FOR_WAITING_ROOM` - Room mode for waiting room. Input "sfu" or "mesh" as waiting room mode you want to use.
+- `-e NBWHISPER_ROOM_MODE_FOR_TALKING_ROOM` - Room mode for talking room. Input "sfu" or "mesh" as talking room mode you want to use.

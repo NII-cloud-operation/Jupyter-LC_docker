@@ -70,7 +70,8 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     git+https://github.com/NII-cloud-operation/Jupyter-LC_index.git \
     git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git \
     git+https://github.com/NII-cloud-operation/sidestickies.git \
-    git+https://github.com/NII-cloud-operation/nbsearch.git
+    git+https://github.com/NII-cloud-operation/nbsearch.git \
+    git+https://github.com/NII-cloud-operation/nbwhisper.git
 
 
 RUN jupyter contrib nbextension install --sys-prefix && \
@@ -88,6 +89,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
     jupyter nbclassic-serverextension enable --py nbtags --sys-prefix && \
     jupyter nbclassic-extension install --py nbsearch --sys-prefix && \
     jupyter nbclassic-serverextension enable --py nbsearch --sys-prefix && \
+    jupyter nbclassic-extension install --py nbwhisper --sys-prefix && \
+    jupyter nbclassic-serverextension enable --py nbwhisper --sys-prefix && \
     jupyter nbclassic-extension install --py jupyter_nbextensions_configurator --sys-prefix && \
     jupyter nbclassic-extension enable --py jupyter_nbextensions_configurator --sys-prefix && \
     jupyter nbclassic-serverextension enable --py jupyter_nbextensions_configurator --sys-prefix && \
