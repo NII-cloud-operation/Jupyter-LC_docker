@@ -62,7 +62,7 @@ RUN pip --no-cache-dir install folium
 #### Jupyter-LC_index (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_index
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
-    https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master \
+    https://github.com/NII-cloud-operation/jupyter_contrib_nbextensions/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_run_through/tarball/master \
     https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
