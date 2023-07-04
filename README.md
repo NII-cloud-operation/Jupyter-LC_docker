@@ -63,9 +63,15 @@ You may customize the execution of Docker container and the Notebook server cont
 
 ### Using sidestickies
 
-You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) by the following steps.
+You can use [sidestickies](https://github.com/NII-cloud-operation/sidestickies) by either of the following steps.
 
+Using Scrapbox https://scrapbox.io/:
 - Add `-e SIDESTICKIES_SCRAPBOX_PROJECT_ID=value -e SIDESTICKIES_SCRAPBOX_COOKIE_CONNECT_SID=value` to docker options - Specify Scrapbox account to [sidestickies](https://github.com/NII-cloud-operation/sidestickies).
+- Enable the sidestickies extension via the Nbextensions tab.
+*Note: you need to enable both "Sidestickies for file tree" and "Sidestickies for notebook" nbextensions.*
+
+Using ep_weave(Etherpad) https://github.com/NII-cloud-operation/ep_weave :
+- Add `-e SIDESTICKIES_EP_WEAVE_URL=http://ep_weave:9001 -e SIDESTICKIES_EP_WEAVE_API_KEY=YOUR_ETHERPAD_APIKEY` to docker options.
 - Enable the sidestickies extension via the Nbextensions tab.
 *Note: you need to enable both "Sidestickies for file tree" and "Sidestickies for notebook" nbextensions.*
 
