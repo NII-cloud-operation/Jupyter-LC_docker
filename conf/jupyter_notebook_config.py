@@ -27,6 +27,7 @@ if 'SIDESTICKIES_EP_WEAVE_URL' in os.environ:
 
 if 'SIDESTICKIES_EP_WEAVE_API_KEY' in os.environ:
     c.EpWeaveAPI.apikey = os.environ['SIDESTICKIES_EP_WEAVE_API_KEY']
+    del os.environ['SIDESTICKIES_EP_WEAVE_API_KEY']
 
 if 'SIDESTICKIES_EP_WEAVE_API_URL' in os.environ:
     c.EpWeaveAPI.api_url = os.environ['SIDESTICKIES_EP_WEAVE_API_URL']
