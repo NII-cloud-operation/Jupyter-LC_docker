@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook:lab-3.6.3
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -36,15 +36,15 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
     apt-get -y install sshpass openssl ipmitool libssl-dev libffi-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    conda install --quiet --yes requests paramiko ansible && \
-    conda clean --all -f -y
+    mamba install --quiet --yes requests paramiko ansible && \
+    mamba clean --all -f -y
 
 ### Utilities
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    conda install --quiet --yes papermill && \
+    mamba install --quiet --yes papermill && \
     pip --no-cache-dir install netaddr pyapi-gitlab runipy pysnmp pysnmp-mibs && \
-    conda clean --all -f -y
+    mamba clean --all -f -y
 
 ### Add files
 RUN mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
