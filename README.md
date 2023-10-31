@@ -94,6 +94,7 @@ You will be able to use NBSearch once you set up your Solr and S3 compatible sto
 - `-e NBSEARCHDB_BASE_DIR=your_notebook_home_dir` - Notebook directory to be searchable(default: `/home/$NB_USER`)
 - `-e NBSEARCHDB_MY_SERVER_URL=your_notebook_server_url` - URL of my server, used to identify the notebooks on this server(default: `http://localhost:8888/`)
 - `-e NBSEARCHDB_AUTO_UPDATE=1` - Launch lsyncd process to update the index of Solr when local files are updated automatically
+- `-e NBSEARCHDB_OWNER=username` - The value of owner field for updating solr index(default: the value of environment variable `JUPYTERHUB_USER` or `NB_USER`)
 - `-e NBSEARCHDB_UPDATE_INDEX_OPT` - Options for the `update-index` NBSearch command invoked by the lsyncd process
 
 ### Using NBWhisper
