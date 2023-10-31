@@ -82,6 +82,14 @@ c.LocalSource.server = os.environ['NBSEARCHDB_MY_SERVER_URL'] \
                        if is_env_var_defined('NBSEARCHDB_MY_SERVER_URL') else \
                        'http://localhost:8888/'
 
+# owner field for updating solr index: NBSEARCHDB_OWNER (primary) -> JUPYTERHUB_USER -> NB_USER
+if is_env_var_defined('NBSEARCHDB_OWNER'):
+    c.LocalSource.owner = os.environ['NBSEARCHDB_OWNER']
+elif is_env_var_defined('JUPYTERHUB_USER'):
+    c.LocalSource.owner = os.environ['JUPYTERHUB_USER']
+elif is_env_var_defined('NB_USER'):
+    c.LocalSource.owner = os.environ['NB_USER']
+
 if is_env_var_defined('NBWHISPER_SKYWAY_API_TOKEN'):
     c.NBWhisper.skyway_api_token = os.environ['NBWHISPER_SKYWAY_API_TOKEN']
     # Secrets removed from environment variables
