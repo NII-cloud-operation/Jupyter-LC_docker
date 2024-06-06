@@ -67,14 +67,15 @@ RUN apt-get update && apt-get install -y expect && \
 
 RUN rm /home/$NB_USER/*.ipynb
 
+RUN jupyter labextension enable sidestickies --level=system && \
+    jupyter labextension enable nbsearch --level=system
+
 USER $NB_USER
-RUN jupyter labextension enable sidestickies --level=user && \
-    jupyter nbclassic-extension enable --py --user nbtags
+RUN jupyter nbclassic-extension enable --py --user nbtags
 ENV SIDESTICKIES_SCRAPBOX_PROJECT_ID sidestickies-public
 
 # for nbsearch -->
-RUN jupyter labextension enable nbsearch --level=user && \
-    mkdir -p /home/$NB_USER/.nbsearch && \
+RUN mkdir -p /home/$NB_USER/.nbsearch && \
     cp /tmp/nbsearch/example/config_*.py /home/$NB_USER/.nbsearch/
 
 RUN mkdir /home/$NB_USER/.nbsearch/conf.d && \
