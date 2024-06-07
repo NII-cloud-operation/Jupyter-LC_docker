@@ -1,5 +1,5 @@
-# base-demo-lab 2024-05-29-r1
-FROM niicloudoperation/notebook@sha256:941d33cb92d14fbce40c4a68eabe56f437ae2e466bce89a2e72b47c045188ac8
+# base-demo-lab 2024-06-07
+FROM niicloudoperation/notebook@sha256:b290a12eff48cdfc4cb787c96da0161db6fc6f1373a2d1b074e38d66cb622f4d
 
 USER root
 
