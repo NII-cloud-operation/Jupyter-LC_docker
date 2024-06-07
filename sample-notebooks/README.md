@@ -7,6 +7,9 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 ## デモ環境の利用方法
 
 このデモ環境ではJupyterのインタフェースを使って、運用作業の一例としてのログ分析や、我々のチームがLC4RIの実践のために開発している各種Extensionを使ってみるといった体験ができます。
+Notebookを参照するには、 Files タブを参照してください。
+
+![Files](./images/files_tab.png)
 
 (mybinder.orgからアクセスしている場合) なお、この環境ではNotebookを自由に作成、編集することができますが、Notebookに対する変更等は、 **保存されません** 。この環境は[Binder](https://mybinder.readthedocs.io/en/latest/)サービスの上でデプロイされており、一定時間が経過すると自動的に削除されます。編集したNotebookなどの情報は失われますのでご注意ください。
 
@@ -16,7 +19,7 @@ Literate Computing for Reproducible Infrastructure（以下 「LC4RI」）は、
 > <span style='background-color:mistyrose;'> **デモ環境を体験するに際して、 [Binder](https://mybinder.readthedocs.io/en/latest/) および [Scrapbox](https://scrapbox.io/product/) の利用規約は各自で確認ください。** </span>
 
 
-<img src="./tree/images/demo.png" align="right" width="30%" />
+<img src="./images/demo.png" align="right" width="30%" />
 
 <span style='background-color:mistyrose;'> 質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！</span>
 
