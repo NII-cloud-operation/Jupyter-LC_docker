@@ -1,0 +1,10 @@
+{
+  "name": "docker-ui-tests",
+  "version": "1.0.0",
+  "description": "JupyterLab docker Integration Tests",
+  "private": true,
+  "devDependencies": {
+    "@jupyterlab/galata": "^5.0.0",
+    "@playwright/test": "^1.44.1"
+  }
+}

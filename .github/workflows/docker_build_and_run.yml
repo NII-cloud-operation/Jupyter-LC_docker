@@ -1,0 +1,52 @@
+name: Docker Build and Run
+
+on:
+  push:
+    tags: '*'
+  pull_request:
+    branches: '*'
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and load Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: niicloudoperation/notebook
+          load: true
+          no-cache: true
+
+      - name: Run Docker container
+        run: docker run -d --name jupyter_lab_container niicloudoperation/notebook
+
+      - name: Verify Docker container is running
+        run: docker ps -a
+
+      - name: Stop Docker container
+        run: docker stop jupyter_lab_container
+
+      - name: Remove Docker container
+        run: docker rm jupyter_lab_container
+
+      - name: Install dependencies And Run Playwright tests
+        run: |
+          cd ./ui-tests
+          npm install
+          npx playwright install
+          npx playwright test
+          cd ..
