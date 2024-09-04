@@ -78,6 +78,36 @@ c.LocalSource.server = os.environ['NBSEARCHDB_MY_SERVER_URL'] \
                        if 'NBSEARCHDB_MY_SERVER_URL' in os.environ else \
                        'http://localhost:8888/'
 
+# The configuration of the nbwhisper extension
+# https://github.com/NII-cloud-operation/nbwhisper/tree/feature/lab?tab=readme-ov-file#options
+# singlaing_url: The URL of the signaling server
+if 'NBWHISPER_SIGNALING_URL' in os.environ:
+    c.NBWhisper.signaling_url = os.environ['NBWHISPER_SIGNALING_URL']
+
+# api_key: The API key for the signaling server
+if 'NBWHISPER_SORA_API_KEY' in os.environ:
+    c.NBWhisper.api_key = os.environ['NBWHISPER_SORA_API_KEY']
+    # Secrets removed from environment variables
+    del os.environ['NBWHISPER_SORA_API_KEY']
+
+# channel_id_prefix: The prefix of the channel ID using the WebRTC SFU
+if 'NBWHISPER_CHANNEL_ID_PREFIX' in os.environ:
+    c.NBWhisper.channel_id_prefix = os.environ['NBWHISPER_CHANNEL_ID_PREFIX']
+
+# channel_id_suffix: The suffix of the channel ID using the WebRTC SFU
+if 'NBWHISPER_CHANNEL_ID_SUFFIX' in os.environ:
+    c.NBWhisper.channel_id_suffix = os.environ['NBWHISPER_CHANNEL_ID_SUFFIX']
+
+# share_current_tab_only: If true, only the current tab is shared
+# Users can set True, Yes, Y or 1 to enable this feature
+if 'NBWHISPER_SHARE_CURRENT_TAB_ONLY' in os.environ:
+    share_current_tab_only = os.environ['NBWHISPER_SHARE_CURRENT_TAB_ONLY']
+    if share_current_tab_only.lower() in ['true', 'yes', 'y', '1']:
+        c.NBWhisper.share_current_tab_only = True
+    else:
+        c.NBWhisper.share_current_tab_only = False
+
+# Deprecated: (Legacy) SkyWay API is not used for now
 if 'NBWHISPER_SKYWAY_API_TOKEN' in os.environ:
     c.NBWhisper.skyway_api_token = os.environ['NBWHISPER_SKYWAY_API_TOKEN']
     # Secrets removed from environment variables

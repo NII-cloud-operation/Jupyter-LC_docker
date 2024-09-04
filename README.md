@@ -100,6 +100,16 @@ You will be able to use NBSearch once you set up your Solr and S3 compatible sto
 
 You can use [NBWhisper](https://github.com/NII-cloud-operation/nbwhisper) by enabling the NBWhisper extension via the Nbextensions tab.
 
+To use NBWhisper, you will need an API Key for Shiguredo's Sora Cloud service.
+
+- `-e NBWHISPER_SIGNALING_URL=your_signaling_url` - The URL of the signaling server
+- `-e NBWHISPER_SORA_API_KEY=your_api_key` - The API key for the signaling server
+- `-e NBWHISPER_CHANNEL_ID_PREFIX=your_channel_id_prefix` - The prefix of the channel ID using the WebRTC SFU
+- `-e NBWHISPER_CHANNEL_ID_SUFFIX=your_channel_id_suffix` - The suffix of the channel ID using the WebRTC SFU
+- `-e NBWHISPER_SHARE_CURRENT_TAB_ONLY=1` - If true, only the current tab is shared
+
+#### (Deprecated) Using SkyWay service
+
 To use NBWhisper, you need an API token of the SkyWay (WebRTC) service. It can be specified from environment variables as follows.
 (For more information, see https://github.com/NII-cloud-operation/nbwhisper/ .)
 
