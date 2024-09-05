@@ -7,6 +7,8 @@ c.FileContentsManager.delete_to_trash = False
 c.NotebookApp.quit_button = False
 c.NotebookApp.kernel_spec_manager_class = 'lc_wrapper.LCWrapperKernelSpecManager'
 
+c.LabApp.custom_css = True
+
 if 'PASSWORD' in os.environ:
     from notebook.auth import passwd
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
