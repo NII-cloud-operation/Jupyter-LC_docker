@@ -157,6 +157,18 @@ RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; prin
     curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.js > $CUSTOM_DIR/codemirror/addon/merge/merge.js && \
     curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.min.css > $CUSTOM_DIR/merge.min.css
 
+#### CSS for JupyterLab
+RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/custom && \
+    mkdir -p $CUSTOM_DIR && \
+    cp /tmp/nb7-custom.css $CUSTOM_DIR/custom.css && \
+    cp /tmp/logo.png $CUSTOM_DIR/logo.png && \
+    CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/jupyterlab/themes/@jupyterlab && \
+    cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-dark-extension/index.css && \
+    cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-light-extension/index.css && \
+    CUSTOM_DIR=/opt/conda/share/jupyter/lab/themes/@jupyterlab && \
+    cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-dark-extension/index.css && \
+    cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-light-extension/index.css
+
 ### Custom get_ipython().system() to control error propagation of shell commands
 RUN mkdir -p $CONDA_DIR/etc/ipython/startup/ && \
     cp /tmp/ipython_config.py $CONDA_DIR/etc/ipython/ && \

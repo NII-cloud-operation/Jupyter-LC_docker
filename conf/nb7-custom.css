@@ -1,0 +1,23 @@
+/* LC4RI Custom Logo */
+#jp-NotebookLogo {
+    position: relative;
+    display: inline-block;
+    width: 182px;
+}
+
+#jp-NotebookLogo svg {
+    visibility: hidden;
+}
+
+#jp-NotebookLogo::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 182px;
+    height: 34px;
+    background-image: url('./logo.png');
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+}

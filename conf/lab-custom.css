@@ -1,0 +1,19 @@
+
+/* custom CSS for nii-cloud-operation/notebook */
+#jp-MainLogo svg {
+    visibility: hidden;
+}
+
+#jp-MainLogo::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 0;
+    width: 26px;
+    height: 26px;
+    background-image: url(../../../../../custom/logo.png);
+    background-size: cover;
+    background-position: left;
+    pointer-events: none;
+    margin-left: 4px;
+}
