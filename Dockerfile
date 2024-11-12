@@ -32,6 +32,15 @@ RUN mkdir -p /opt/minio/bin/ && \
     chmod +x /opt/minio/bin/minio && mkdir -p /var/minio && chown jovyan:users -R /var/minio
 
 # ep_weave
+# Install nodejs 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    mkdir -p /.npm && \
+    chown jovyan:users -R /.npm && \
+    rm -rf /var/lib/apt/lists/*
+ENV NPM_CONFIG_PREFIX=/.npm
+ENV PATH=/.npm/bin/:${PATH}
 RUN mkdir /opt/etherpad && chown jovyan:users -R /opt/etherpad && \
     chown jovyan:users -R /var/solr /var/log/nginx /var/lib/nginx
 
