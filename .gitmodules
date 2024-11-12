@@ -1,3 +1,7 @@
 [submodule "nbsearch"]
 	path = nbsearch
 	url = https://github.com/NII-cloud-operation/nbsearch.git
+[submodule "sidestickies"]
+	path = sidestickies
+	url = https://github.com/NII-cloud-operation/sidestickies.git
+	branch = feature/lab
