@@ -7,7 +7,7 @@ Notebooks are machine-reproducible, human-readable, and human-substitutable proc
 
 ## About This DEMO
 
-> <span style='background-color:mistyrose;'> ** Please respect guidelines and policies [MyBinder.org](https://mybinder.readthedocs.io/en/latest/user-guidelines.html) and [Scrapbox.io](https://scrapbox.io/product/) ** </span>
+> <span style='background-color:mistyrose;'> ** Please respect guidelines and policies [MyBinder.org](https://mybinder.readthedocs.io/en/latest/user-guidelines.html) ** </span>
 
 
 * [EN01_All About NII Extensions - #1 LC_run_through](EN01_All%20About%20NII%20Extensions%20-%20%231%20LC_run_through.ipynb)
