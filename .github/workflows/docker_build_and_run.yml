@@ -4,7 +4,9 @@ on:
   push:
     tags: '*'
   pull_request:
-    branches: '*'
+    branches:
+      - main
+      - feature/lab
 
 jobs:
   build-and-run:
