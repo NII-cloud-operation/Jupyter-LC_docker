@@ -121,6 +121,8 @@ ADD conf /tmp/
 RUN mkdir -p $CONDA_DIR/etc/jupyter && \
     cp -f /tmp/jupyter_notebook_config.py \
        $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py && \
+    cp -f /tmp/jupyter_server_config.py \
+       $CONDA_DIR/etc/jupyter/jupyter_server_config.py && \
     mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
 
 ### kernels

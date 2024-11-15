@@ -8,7 +8,6 @@ c.NotebookApp.quit_button = False
 c.NotebookApp.kernel_spec_manager_class = 'lc_wrapper.LCWrapperKernelSpecManager'
 
 c.LabApp.custom_css = True
-c.LabApp.default_url = '/tree'
 
 if 'PASSWORD' in os.environ:
     from notebook.auth import passwd
