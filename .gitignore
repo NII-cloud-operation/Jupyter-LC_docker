@@ -9,3 +9,6 @@
 .bash_history
 .cache
 .python-version
+
+pads.d/
+pads.d/**

@@ -129,7 +129,7 @@ RUN jupyter labextension enable sidestickies --level=system && \
 
 # <-- for sidestickies
 
-RUN cp /tmp/nbtags/example/etherpad-settings.json /opt/etherpad/settings.json
+RUN cp /tmp/conf/etherpad-settings.json /opt/etherpad/settings.json
 
 USER $NB_USER
 RUN jupyter nbclassic-extension enable --py --user nbtags
