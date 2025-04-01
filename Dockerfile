@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.2.2
+FROM quay.io/jupyter/scipy-notebook:notebook-7.3.3
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -57,11 +57,11 @@ RUN pip --no-cache-dir install folium
 #### nbwhisper (NII) - https://github.com/NII-cloud-operation/nbwhisper
 ENV nblineage_release_tag=0.2.0.rc1 \
     nblineage_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/ \
-    lc_index_release_tag=0.2.0.rc3 \
+    lc_index_release_tag=0.2.0.rc4 \
     lc_index_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_index/releases/download/ \
     lc_multi_outputs_release_tag=2.2.0.rc3 \
     lc_multi_outputs_release_url=https://github.com/NII-cloud-operation/Jupyter-multi_outputs/releases/download/ \
-    lc_run_through_release_tag=0.2.0.rc3 \
+    lc_run_through_release_tag=0.2.0.rc4 \
     lc_run_through_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_run_through/releases/download/ \
     diff_release_tag=0.2.0.rc2 \
     diff_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff/releases/download/ \
