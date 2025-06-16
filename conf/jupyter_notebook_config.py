@@ -9,6 +9,10 @@ c.NotebookApp.kernel_spec_manager_class = 'lc_wrapper.LCWrapperKernelSpecManager
 
 c.LabApp.custom_css = True
 
+# Enable the JupyterLab extension for nbsearch magic commands
+c.JupyterNotebookApp.expose_app_in_browser = True
+c.LabApp.expose_app_in_browser = True
+
 if 'PASSWORD' in os.environ:
     from notebook.auth import passwd
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
