@@ -37,7 +37,7 @@ RUN apt-get update && \
 RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     conda install --quiet --yes papermill && \
-    pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs && \
+    pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs pytest-playwright && \
     conda clean --all -f -y
 
 #### Visualization
