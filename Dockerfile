@@ -40,6 +40,20 @@ RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync ipu
     pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs pytest-playwright && \
     conda clean --all -f -y
 
+### Install nodejs 20 for svg-term-cli
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    mkdir -p /.npm && \
+    chown jovyan:users -R /.npm && \
+    rm -rf /var/lib/apt/lists/*
+ENV NPM_CONFIG_PREFIX=/.npm
+ENV PATH=/.npm/bin/:${PATH}
+USER $NB_USER
+RUN npm install -g svg-term-cli && \
+    npm cache clean --force
+USER root
+
 #### Visualization
 RUN pip --no-cache-dir install folium
 
