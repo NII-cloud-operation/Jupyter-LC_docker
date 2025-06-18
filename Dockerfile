@@ -11,11 +11,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     unzip \
     libsm6 \
     pandoc \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-plain-generic \
+    texlive-latex-recommended \
     libxrender1 \
     inkscape \
     wget \
