@@ -1,0 +1,7 @@
+services:
+  notebook:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./sample-notebooks:/home/jovyan/sample-notebooks:rw

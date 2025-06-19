@@ -1,5 +1,0 @@
----
-- hosts: logstash-server
-  tasks:
-  - name: send sampledata to elasticsearch
-    shell: cat tokyo2015.csv | logstash-5.0.0/bin/logstash -f main.conf

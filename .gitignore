@@ -9,3 +9,7 @@
 .bash_history
 .cache
 .python-version
+
+sample-notebooks/.cert-*
+sample-notebooks/hosts
+sample-notebooks/*/hosts

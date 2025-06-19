@@ -41,6 +41,16 @@ $ docker rm demo
 
 としてください。詳しくは、Dockerコマンドラインのドキュメントを参照してください。
 
+## ローカル開発用Docker Compose
+
+ローカルでコンテンツを作成・編集する場合は、以下のコマンドでdocker-composeを使用できます。
+
+```
+$ docker-compose up
+```
+
+この方法では、`sample-notebooks`ディレクトリが書き込み可能な状態でマウントされるため、Notebookの編集内容が保存されます。
+
 > <span style='background-color:mistyrose;'> **デモ環境を体験するに際して、 [Binder](https://mybinder.readthedocs.io/en/latest/) の利用規約は各自で確認ください。** </span>
 
 <span style='background-color:mistyrose;'> 質問等、お問い合わせは、Facebookページ https://www.facebook.com/groups/792904597583420/ に参加申請ください！</span>
