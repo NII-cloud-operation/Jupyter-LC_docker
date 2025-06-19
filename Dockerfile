@@ -1,6 +1,7 @@
 FROM solr:8 AS solr
 
-FROM niicloudoperation/notebook:feature-lab
+# niicloudoperation/notebook:feature-lab
+FROM niicloudoperation/notebook@sha256:19cffd1daae12ec783da10257d07a1b0e28d7d626e207d69696611a42bf9b7b6
 
 USER root
 
@@ -32,15 +33,6 @@ RUN mkdir -p /opt/minio/bin/ && \
     chmod +x /opt/minio/bin/minio && mkdir -p /var/minio && chown jovyan:users -R /var/minio
 
 # ep_weave
-# Install nodejs 20
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get clean && \
-    mkdir -p /.npm && \
-    chown jovyan:users -R /.npm && \
-    rm -rf /var/lib/apt/lists/*
-ENV NPM_CONFIG_PREFIX=/.npm
-ENV PATH=/.npm/bin/:${PATH}
 RUN mkdir /opt/etherpad && chown jovyan:users -R /opt/etherpad && \
     chown jovyan:users -R /var/solr /var/log/nginx /var/lib/nginx
 
@@ -74,7 +66,7 @@ RUN apt-get update && apt-get install -y expect && \
 
 RUN rm /home/$NB_USER/*.ipynb
 
-RUN pip install jupyter-server-proxy && \
+RUN pip --no-cache-dir install jupyter-server-proxy && \
     jupyter server extension enable --sys-prefix jupyter_server_proxy
 COPY ./nbsearch /tmp/nbsearch
 COPY ./sidestickies /tmp/nbtags
