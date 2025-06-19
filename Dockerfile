@@ -74,7 +74,7 @@ RUN apt-get update && apt-get install -y expect && \
 
 RUN rm /home/$NB_USER/*.ipynb
 
-RUN pip install jupyter-server-proxy && \
+RUN pip --no-cache-dir install jupyter-server-proxy && \
     jupyter server extension enable --sys-prefix jupyter_server_proxy
 COPY ./nbsearch /tmp/nbsearch
 COPY ./sidestickies /tmp/nbtags
