@@ -81,7 +81,9 @@ ENV nblineage_release_tag=0.2.0.rc1 \
     nbsearch_release_tag=0.2.0.rc3 \
     nbsearch_release_url=https://github.com/NII-cloud-operation/nbsearch/releases/download/ \
     nbwhisper_release_tag=0.2.0.rc1 \
-    nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/
+    nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
+    lc_toc_button_release_tag=0.1.0.rc2 \
+    lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
     jupyterlab-language-pack-ja-JP \
@@ -94,6 +96,7 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     ${sidestickies_release_url}${sidestickies_release_tag}/sidestickies-${sidestickies_release_tag}.tar.gz \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
     ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
+    ${lc_toc_button_release_url}${lc_toc_button_release_tag}/table_of_contents-${lc_toc_button_release_tag}.tar.gz \
     jupyter-ai langchain-anthropic langchain-openai langchain-google-genai
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
