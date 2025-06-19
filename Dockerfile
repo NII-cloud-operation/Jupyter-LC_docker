@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.3.3
+FROM quay.io/jupyter/scipy-notebook:notebook-7.4.3
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -11,11 +11,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     unzip \
     libsm6 \
     pandoc \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
-    texlive-plain-generic \
+    texlive-latex-recommended \
     libxrender1 \
     inkscape \
     wget \
@@ -30,15 +26,30 @@ SHELL ["/bin/bash", "-c"]
 RUN apt-get update && \
     apt-get -y install sshpass openssl ipmitool libssl-dev libffi-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    conda install --quiet --yes requests paramiko ansible && \
+    conda install --quiet --yes requests paramiko ansible asciinema && \
     conda clean --all -f -y
 
 ### Utilities
-RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq rsync iputils-ping && \
+RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq \
+        rsync iputils-ping netcat-traditional && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     conda install --quiet --yes papermill && \
-    pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs && \
+    pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs pytest-playwright && \
     conda clean --all -f -y
+
+### Install nodejs 20 for svg-term-cli
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    mkdir -p /.npm && \
+    chown jovyan:users -R /.npm && \
+    rm -rf /var/lib/apt/lists/*
+ENV NPM_CONFIG_PREFIX=/.npm
+ENV PATH=/.npm/bin/:${PATH}
+USER $NB_USER
+RUN npm install -g svg-term-cli && \
+    npm cache clean --force
+USER root
 
 #### Visualization
 RUN pip --no-cache-dir install folium
@@ -61,13 +72,13 @@ ENV nblineage_release_tag=0.2.0.rc1 \
     lc_index_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_index/releases/download/ \
     lc_multi_outputs_release_tag=2.2.0.rc3 \
     lc_multi_outputs_release_url=https://github.com/NII-cloud-operation/Jupyter-multi_outputs/releases/download/ \
-    lc_run_through_release_tag=0.2.0.rc4 \
+    lc_run_through_release_tag=0.2.0.rc6 \
     lc_run_through_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_run_through/releases/download/ \
     diff_release_tag=0.2.0.rc2 \
     diff_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff/releases/download/ \
     sidestickies_release_tag=0.3.1.rc3 \
     sidestickies_release_url=https://github.com/NII-cloud-operation/sidestickies/releases/download/ \
-    nbsearch_release_tag=0.2.0.rc2 \
+    nbsearch_release_tag=0.2.0.rc3 \
     nbsearch_release_url=https://github.com/NII-cloud-operation/nbsearch/releases/download/ \
     nbwhisper_release_tag=0.2.0.rc1 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/
@@ -82,7 +93,8 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     ${diff_release_url}${diff_release_tag}/lc_notebook_diff-${diff_release_tag}.tar.gz \
     ${sidestickies_release_url}${sidestickies_release_tag}/sidestickies-${sidestickies_release_tag}.tar.gz \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
-    ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz
+    ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
+    jupyter-ai langchain-anthropic langchain-openai langchain-google-genai
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
     jupyter nbclassic-extension install --py lc_run_through --sys-prefix && \
