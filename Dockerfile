@@ -66,9 +66,9 @@ RUN pip --no-cache-dir install folium
 #### sidestickies (NII) - https://github.com/NII-cloud-operation/sidestickies
 #### nbsearch (NII) - https://github.com/NII-cloud-operation/nbsearch
 #### nbwhisper (NII) - https://github.com/NII-cloud-operation/nbwhisper
-ENV nblineage_release_tag=0.2.0.rc2 \
+ENV nblineage_release_tag=0.2.0.rc3 \
     nblineage_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/ \
-    lc_index_release_tag=0.2.0.rc4 \
+    lc_index_release_tag=0.2.0.rc6 \
     lc_index_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_index/releases/download/ \
     lc_multi_outputs_release_tag=2.2.0.rc3 \
     lc_multi_outputs_release_url=https://github.com/NII-cloud-operation/Jupyter-multi_outputs/releases/download/ \
