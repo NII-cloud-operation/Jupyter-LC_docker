@@ -83,13 +83,15 @@ ENV nblineage_release_tag=0.2.0.rc3 \
     nbwhisper_release_tag=0.2.0.rc2 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
     lc_toc_button_release_tag=0.1.0.rc2 \
-    lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/
+    lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
+    lc_wrapper_release_tag=1.3.2.rc0 \
+    lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
     jupyterlab-language-pack-ja-JP \
     ${nblineage_release_url}${nblineage_release_tag}/nblineage-${nblineage_release_tag}.tar.gz \
     ${lc_run_through_release_url}${lc_run_through_release_tag}/lc_run_through-${lc_run_through_release_tag}.tar.gz \
-    https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master \
+    ${lc_wrapper_release_url}${lc_wrapper_release_tag}/lc_wrapper-${lc_wrapper_release_tag}.tar.gz \
     ${lc_multi_outputs_release_url}${lc_multi_outputs_release_tag}/lc_multi_outputs-${lc_multi_outputs_release_tag}.tar.gz \
     ${lc_index_release_url}${lc_index_release_tag}/lc_index-${lc_index_release_tag}.tar.gz \
     ${diff_release_url}${diff_release_tag}/lc_notebook_diff-${diff_release_tag}.tar.gz \
