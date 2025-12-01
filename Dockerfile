@@ -84,7 +84,7 @@ ENV nblineage_release_tag=0.2.0.rc3 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
     lc_toc_button_release_tag=0.1.0.rc2 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
-    lc_wrapper_release_tag=1.3.2.rc0 \
+    lc_wrapper_release_tag=1.3.2.rc1 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
