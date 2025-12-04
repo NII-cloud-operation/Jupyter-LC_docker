@@ -6,7 +6,12 @@ node_modules/
 # Integration tests
 ui-tests/test-results/
 ui-tests/playwright-report/
+# E2E test artifacts
+ui-tests/e2e-notebook/artifacts/
+ui-tests/e2e-notebook/notebooks/.log/
 # OSX files
 .DS_Store
 # Yarn cache
 .yarn/
+
+__pycache__

@@ -1,0 +1,92 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  notebook-e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('ui-tests/e2e-notebook/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          set -euxo pipefail
+          pip install --upgrade pip
+          pip install -r ui-tests/e2e-notebook/requirements.txt
+
+      - name: Install Playwright browsers
+        run: |
+          set -euxo pipefail
+          python -m playwright install --with-deps
+
+      - name: Build Docker image
+        run: |
+          set -euxo pipefail
+          docker build -t niicloudoperation/notebook:test .
+
+      - name: Start Docker container
+        run: |
+          set -euxo pipefail
+          docker run -d --name jupyter_e2e_container -p 8888:8888 \
+            niicloudoperation/notebook:test start-notebook.sh \
+            --ServerApp.token='test-token' --ServerApp.allow_origin='*'
+          sleep 20
+          # Health check
+          curl --retry 10 --retry-delay 3 --retry-connrefused --fail http://localhost:8888/tree?token=test-token || {
+            docker logs jupyter_e2e_container
+            exit 1
+          }
+
+      - name: Run notebook E2E tests
+        env:
+          E2E_TRANSITION_TIMEOUT: '30000'
+          NOTEBOOK7_URL: 'http://localhost:8888/tree'
+          JUPYTER_API_URL: 'http://localhost:8888/api'
+          JUPYTER_TOKEN: 'test-token'
+        run: |
+          set -euxo pipefail
+          python ui-tests/e2e-notebook/run_notebooks.py --skip-failed-test
+
+      - name: Gather Docker logs
+        if: always()
+        run: |
+          set -euxo pipefail
+          mkdir -p ui-tests/e2e-notebook/artifacts
+          docker logs jupyter_e2e_container > ui-tests/e2e-notebook/artifacts/jupyter.log 2>&1 || true
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-results
+          path: |
+            ui-tests/e2e-notebook/artifacts
+
+      - name: Shutdown container
+        if: always()
+        run: |
+          set -euxo pipefail
+          docker stop jupyter_e2e_container || true
+          docker rm jupyter_e2e_container || true
