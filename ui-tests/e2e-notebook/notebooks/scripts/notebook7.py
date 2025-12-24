@@ -286,6 +286,142 @@ async def select_cell(
     await cell.click()
 
 
+async def get_cell_execution_number(
+    page: Page,
+    index: int,
+    timeout: int = 30000
+) -> int | None:
+    """Get the execution number from a cell's input prompt.
+
+    Extracts the number from the jp-InputArea-prompt element (e.g., "[1]" -> 1).
+    Returns None if the cell hasn't been executed or is currently executing ([*]).
+
+    Args:
+        page: Playwright page object
+        index: Cell index (0-based)
+        timeout: Timeout in milliseconds
+
+    Returns:
+        Execution number as int, or None if not available
+    """
+    cell = await get_cell(page, index, timeout)
+    prompt = cell.locator('.jp-InputArea-prompt')
+    prompt_text = await prompt.text_content()
+
+    if prompt_text is None:
+        return None
+
+    # Extract number from brackets, e.g., "[1]" -> "1"
+    match = re.search(r'\[(\d+)\]', prompt_text)
+    if match:
+        return int(match.group(1))
+
+    return None
+
+
+async def rename_notebook(
+    page: Page,
+    new_name: str,
+    timeout: int = 30000
+):
+    """Rename the current notebook.
+
+    Uses File > Rename... menu to rename the notebook.
+
+    Args:
+        page: Playwright page object
+        new_name: New name for the notebook (without .ipynb extension)
+        timeout: Timeout in milliseconds
+    """
+    # Click the "File" menu in the menu bar
+    file_menu = page.locator('.lm-MenuBar-itemLabel').filter(has_text=re.compile(r'^File$'))
+    await expect(file_menu).to_be_visible(timeout=timeout)
+    await file_menu.click()
+
+    # Click "Rename..." in the dropdown menu
+    dropdown_menu = page.locator('.lm-Menu.lm-MenuBar-menu')
+    await expect(dropdown_menu).to_be_visible(timeout=timeout)
+    rename_item = dropdown_menu.locator('.lm-Menu-item[data-command="application:rename"]')
+    await expect(rename_item).to_be_visible(timeout=timeout)
+    await rename_item.click()
+
+    # Wait for the rename dialog to appear and fill the input
+    rename_input = page.locator('.jp-Dialog input')
+    await expect(rename_input).to_be_visible(timeout=timeout)
+    await rename_input.fill(new_name)
+
+    # Click the Rename button in the dialog
+    rename_button = page.locator('.jp-Dialog-button.jp-mod-accept')
+    await expect(rename_button).to_be_visible(timeout=timeout)
+    await rename_button.click()
+
+    # Wait for the rename to complete
+    await page.wait_for_timeout(500)
+
+
+async def save_notebook(
+    page: Page,
+):
+    """Save the current notebook.
+
+    Uses keyboard shortcut Ctrl+S (or Cmd+S on Mac) to save.
+
+    Args:
+        page: Playwright page object
+    """
+    # Use keyboard shortcut to save
+    await page.keyboard.press('ControlOrMeta+S')
+
+    # Wait for save to complete
+    await page.wait_for_timeout(1000)
+
+
+async def delete_file(
+    page: Page,
+    filename: str,
+    timeout: int = 30000
+) -> bool:
+    """Delete a file from the Jupyter file browser.
+
+    Right-clicks on the file and selects Delete from the context menu.
+    Assumes page is on the tree page (/tree).
+
+    Args:
+        page: Playwright page object (must be on /tree page)
+        filename: Name of the file to delete
+        timeout: Timeout in milliseconds
+
+    Returns:
+        True if file was deleted, False if file was not found
+    """
+    # Find the file in the file browser (title starts with "Name: {filename}")
+    file_item = page.locator(f'.jp-DirListing-item[data-file-type="notebook"][title^="Name: {filename}"]')
+
+    # Check if file exists
+    if await file_item.count() == 0:
+        return False
+
+    # Right-click on the file to open context menu
+    await file_item.click(button='right')
+
+    # Click "Delete" in the context menu
+    context_menu = page.locator('.lm-Widget.lm-Menu')
+    await expect(context_menu).to_be_visible(timeout=timeout)
+    delete_item = context_menu.locator('.lm-Menu-item[data-command="filebrowser:delete"]')
+    await expect(delete_item).to_be_visible(timeout=timeout)
+    await delete_item.click()
+
+    # Confirm deletion in the dialog
+    delete_button = page.locator('.jp-Dialog-button.jp-mod-accept')
+    await expect(delete_button).to_be_visible(timeout=timeout)
+    await delete_button.click()
+
+    # Wait for the file to be removed from the list
+    await expect(file_item).to_have_count(0, timeout=timeout)
+
+    return True
+
+
 __all__ = [
     "create_new_notebook",
     "set_cell_type",
@@ -295,4 +431,8 @@ __all__ = [
     "add_cell",
     "get_cell",
     "select_cell",
+    "get_cell_execution_number",
+    "rename_notebook",
+    "save_notebook",
+    "delete_file",
 ]

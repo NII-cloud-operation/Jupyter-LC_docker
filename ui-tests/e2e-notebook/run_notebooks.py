@@ -65,14 +65,14 @@ def main() -> int:
         notebook7_url = os.getenv("NOTEBOOK7_URL")
         if notebook7_url:
             parameters["notebook7_url"] = notebook7_url
-
-        jupyter_api_url = os.getenv("JUPYTER_API_URL")
-        if jupyter_api_url:
-            parameters["jupyter_api_url"] = jupyter_api_url
         
         jupyter_token = os.getenv("JUPYTER_TOKEN")
         if jupyter_token:
             parameters["jupyter_token"] = jupyter_token
+
+        jupyter_work_dir = os.getenv("JUPYTER_WORK_DIR")
+        if jupyter_work_dir:
+            parameters["jupyter_work_dir"] = jupyter_work_dir
         
         try:
             pm.execute_notebook(

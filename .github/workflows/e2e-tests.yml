@@ -46,12 +46,20 @@ jobs:
           set -euxo pipefail
           docker build -t niicloudoperation/notebook:test .
 
+      - name: Prepare test workspace
+        run: |
+          set -euxo pipefail
+          mkdir -p ui-tests/e2e-notebook/artifacts/jupyter-work
+          cp -r sample-notebooks/* ui-tests/e2e-notebook/artifacts/jupyter-work/
+          chmod -R a+w ui-tests/e2e-notebook/artifacts/jupyter-work
+
       - name: Start Docker container
         run: |
           set -euxo pipefail
           docker run -d --name jupyter_e2e_container -p 8888:8888 \
+            -v $(pwd)/ui-tests/e2e-notebook/artifacts/jupyter-work:/home/jovyan/work \
             niicloudoperation/notebook:test start-notebook.sh \
-            --ServerApp.token='test-token' --ServerApp.allow_origin='*'
+            --ServerApp.token='test-token' --ServerApp.allow_origin='*' --ServerApp.root_dir='/home/jovyan/work'
           sleep 20
           # Health check
           curl --retry 10 --retry-delay 3 --retry-connrefused --fail http://localhost:8888/tree?token=test-token || {
@@ -63,8 +71,8 @@ jobs:
         env:
           E2E_TRANSITION_TIMEOUT: '30000'
           NOTEBOOK7_URL: 'http://localhost:8888/tree'
-          JUPYTER_API_URL: 'http://localhost:8888/api'
           JUPYTER_TOKEN: 'test-token'
+          JUPYTER_WORK_DIR: ${{ github.workspace }}/ui-tests/e2e-notebook/artifacts/jupyter-work
         run: |
           set -euxo pipefail
           python ui-tests/e2e-notebook/run_notebooks.py --skip-failed-test
