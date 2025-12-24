@@ -50,7 +50,7 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p ui-tests/e2e-notebook/artifacts/jupyter-work
-          cp -r sample-notebooks/* ui-tests/e2e-notebook/artifacts/jupyter-work/
+          cp -r test-work/* ui-tests/e2e-notebook/artifacts/jupyter-work/
           chmod -R a+w ui-tests/e2e-notebook/artifacts/jupyter-work
 
       - name: Start Docker container
