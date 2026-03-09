@@ -140,7 +140,9 @@ RUN mkdir -p $CONDA_DIR/etc/jupyter && \
        $CONDA_DIR/etc/jupyter/jupyter_notebook_config.py && \
     cp -f /tmp/jupyter_server_config.py \
        $CONDA_DIR/etc/jupyter/jupyter_server_config.py && \
-    mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg
+    mkdir -p /etc/ansible && cp /tmp/ansible.cfg /etc/ansible/ansible.cfg && \
+    mkdir -p $CONDA_DIR/share/jupyter/lab/settings && \
+    cp -f /tmp/overrides.json $CONDA_DIR/share/jupyter/lab/settings/overrides.json
 
 ### kernels
 RUN chmod +x /tmp/wrapper-kernels/prepare-icons.sh && \
