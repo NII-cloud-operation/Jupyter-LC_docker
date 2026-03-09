@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.5.0
+FROM quay.io/jupyter/scipy-notebook:notebook-7.5.4
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -66,23 +66,23 @@ RUN pip --no-cache-dir install folium
 #### sidestickies (NII) - https://github.com/NII-cloud-operation/sidestickies
 #### nbsearch (NII) - https://github.com/NII-cloud-operation/nbsearch
 #### nbwhisper (NII) - https://github.com/NII-cloud-operation/nbwhisper
-ENV nblineage_release_tag=0.2.0.rc3 \
+ENV nblineage_release_tag=0.2.0.rc4 \
     nblineage_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/ \
-    lc_index_release_tag=0.2.0.rc6 \
+    lc_index_release_tag=0.2.0.rc7 \
     lc_index_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_index/releases/download/ \
-    lc_multi_outputs_release_tag=2.2.0.rc3 \
+    lc_multi_outputs_release_tag=2.2.0.rc4 \
     lc_multi_outputs_release_url=https://github.com/NII-cloud-operation/Jupyter-multi_outputs/releases/download/ \
-    lc_run_through_release_tag=0.2.0.rc7 \
+    lc_run_through_release_tag=0.2.0.rc8 \
     lc_run_through_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_run_through/releases/download/ \
-    diff_release_tag=0.2.0.rc2 \
+    diff_release_tag=0.2.0.rc3 \
     diff_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff/releases/download/ \
     sidestickies_release_tag=0.3.1.rc5 \
     sidestickies_release_url=https://github.com/NII-cloud-operation/sidestickies/releases/download/ \
-    nbsearch_release_tag=0.2.0.rc5 \
+    nbsearch_release_tag=0.2.0.rc6 \
     nbsearch_release_url=https://github.com/NII-cloud-operation/nbsearch/releases/download/ \
-    nbwhisper_release_tag=0.2.0.rc2 \
+    nbwhisper_release_tag=0.2.0.rc3 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
-    lc_toc_button_release_tag=0.1.0.rc2 \
+    lc_toc_button_release_tag=0.1.0.rc3 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
     lc_wrapper_release_tag=1.3.2.rc1 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/
