@@ -21,6 +21,28 @@ jobs:
         with:
           node-version: 18
 
+      - name: Configure Docker to use /mnt
+        run: |
+          # Stop Docker service
+          sudo systemctl stop docker
+          
+          # Create Docker data directory on /mnt
+          sudo mkdir -p /mnt/docker
+          
+          # Configure Docker to use /mnt
+          sudo tee /etc/docker/daemon.json <<EOF
+          {
+            "data-root": "/mnt/docker"
+          }
+          EOF
+        
+          # Start Docker service
+          sudo systemctl start docker
+          
+          # Verify Docker is using /mnt
+          docker info | grep "Docker Root Dir"
+          df -h
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
