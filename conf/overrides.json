@@ -1,0 +1,5 @@
+{
+  "@jupyterlab/notebook-extension:tracker": {
+    "useSystemClipboardForCells": true
+  }
+}
