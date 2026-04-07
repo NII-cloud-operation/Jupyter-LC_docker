@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.5.4
+FROM quay.io/jupyter/scipy-notebook:notebook-7.5.5
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -66,6 +66,7 @@ RUN pip --no-cache-dir install folium
 #### sidestickies (NII) - https://github.com/NII-cloud-operation/sidestickies
 #### nbsearch (NII) - https://github.com/NII-cloud-operation/nbsearch
 #### nbwhisper (NII) - https://github.com/NII-cloud-operation/nbwhisper
+#### jupyter-mynerva (NII) - https://github.com/NII-cloud-operation/jupyter-mynerva
 ENV nblineage_release_tag=0.2.0.rc4 \
     nblineage_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/ \
     lc_index_release_tag=0.2.0.rc7 \
@@ -85,7 +86,11 @@ ENV nblineage_release_tag=0.2.0.rc4 \
     lc_toc_button_release_tag=0.1.0.rc3 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
     lc_wrapper_release_tag=1.3.2.rc1 \
-    lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/
+    lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
+    mynerva_release_tag=0.1.3.rc2 \
+    mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
+    nblibram_release_tag=v2026.4.1 \
+    nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
     jupyterlab-language-pack-ja-JP \
@@ -99,6 +104,7 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
     ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
     ${lc_toc_button_release_url}${lc_toc_button_release_tag}/table_of_contents-${lc_toc_button_release_tag}.tar.gz \
+    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz \
     jupyter-ai langchain-anthropic langchain-openai langchain-google-genai
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
@@ -129,9 +135,11 @@ RUN jupyter nblineage quick-setup --sys-prefix && \
 # jupyter labextension enable sidestickies --level=user
 # jupyter labextension enable nbsearch --level=user
 # jupyter labextension enable nbwhisper --level=user
+# jupyter labextension enable jupyter-mynerva --level=user
 RUN jupyter labextension disable sidestickies --level=system && \
     jupyter labextension disable nbsearch --level=system && \
-    jupyter labextension disable nbwhisper --level=system
+    jupyter labextension disable nbwhisper --level=system && \
+    jupyter labextension disable jupyter-mynerva --level=system
 
 # Copy config files
 ADD conf /tmp/
@@ -208,6 +216,10 @@ RUN apt-get update && apt-get install -yq lsyncd \
     && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-launch.sh \
     && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
     && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
+
+### Install nblibram for jupyter-mynerva
+RUN ARCH=$(dpkg --print-architecture) && \
+    curl -fL ${nblibram_release_url}${nblibram_release_tag}/nblibram_linux_${ARCH}.tar.gz | tar xz -C /usr/local/bin/
 
 # Workaround for https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/issues/71
 RUN pip install --upgrade jupyter_core==5.6.1
