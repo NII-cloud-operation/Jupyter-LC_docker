@@ -108,6 +108,24 @@ To use NBWhisper, you will need an API Key for Shiguredo's Sora Cloud service.
 - `-e NBWHISPER_CHANNEL_ID_SUFFIX=your_channel_id_suffix` - The suffix of the channel ID using the WebRTC SFU
 - `-e NBWHISPER_SHARE_CURRENT_TAB_ONLY=1` - If true, only the current tab is shared
 
+### Using jupyter-mynerva
+
+You can use [jupyter-mynerva](https://github.com/NII-cloud-operation/jupyter-mynerva) by enabling the extension via the Extension Manager or the following command in the container.
+
+```
+jupyter labextension enable jupyter-mynerva --level=user
+```
+
+jupyter-mynerva uses LLM services to provide AI-powered notebook assistance. The following environment variables can be used to configure the extension:
+
+- `-e MYNERVA_SECRET_KEY=your_fernet_key` - Fernet key for encrypting API keys. If absent, keys are stored unencrypted
+- `-e MYNERVA_OPENAI_API_KEY=your_openai_api_key` - Default OpenAI API key
+- `-e MYNERVA_OPENAI_BASE_URL=your_openai_base_url` - Default OpenAI-compatible endpoint (e.g. vLLM, Ollama)
+- `-e MYNERVA_ANTHROPIC_API_KEY=your_anthropic_api_key` - Default Anthropic API key
+- `-e MYNERVA_DEFAULT_PROVIDER=openai_or_anthropic` - Default provider (`openai` or `anthropic`)
+- `-e MYNERVA_DEFAULT_MODEL=your_model_name` - Default model name (optional, fetched from endpoint if not set)
+- `-e MYNERVA_DEFAULTS_ONLY=1` - Lock LLM settings to admin defaults (hides settings UI)
+
 #### (Deprecated) Using SkyWay service
 
 To use NBWhisper, you need an API token of the SkyWay (WebRTC) service. It can be specified from environment variables as follows.
