@@ -104,8 +104,7 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
     ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
     ${lc_toc_button_release_url}${lc_toc_button_release_tag}/table_of_contents-${lc_toc_button_release_tag}.tar.gz \
-    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz \
-    jupyter-ai langchain-anthropic langchain-openai langchain-google-genai
+    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
     jupyter nbclassic-extension install --py lc_run_through --sys-prefix && \
