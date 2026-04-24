@@ -1,7 +1,7 @@
 FROM solr:8 AS solr
 
 # niicloudoperation/notebook:feature-lab
-FROM niicloudoperation/notebook@sha256:c579aae47acc2a0cf39e37b695b9a3d83f3dbb6738e76f132235673040828de3
+FROM niicloudoperation/notebook@sha256:8e70c90ee7ad046f752a7493c8f084fd3e51345c0748f9516c8765a3c87122d5
 
 USER root
 
@@ -115,7 +115,8 @@ RUN cat /tmp/conf/jupyter_notebook_config.py >> $CONDA_DIR/etc/jupyter/jupyter_n
 # <-- for nbsearch
 
 RUN jupyter labextension enable sidestickies --level=system && \
-    jupyter labextension enable nbsearch --level=system
+    jupyter labextension enable nbsearch --level=system && \
+    jupyter labextension enable jupyter-mynerva --level=system
 
 # for nbsearch -->
 

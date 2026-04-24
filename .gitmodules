@@ -4,4 +4,4 @@
 [submodule "sidestickies"]
 	path = sidestickies
 	url = https://github.com/NII-cloud-operation/sidestickies.git
-	branch = feature/lab
+	branch = main
