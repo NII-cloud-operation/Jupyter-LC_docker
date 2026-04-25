@@ -9,6 +9,12 @@ RUN chown jovyan:users -R /home/$NB_USER/
 ADD sample-pads /pads.d
 RUN chown jovyan:users -R /pads.d
 
+# Workaround: replace jupyter-mynerva with 0.1.3.stream2 (lazy SDK imports)
+# to avoid JupyterHub spawn 30s timeout caused by slow extension load.
+RUN pip uninstall -y jupyter_mynerva && \
+    pip install --no-cache-dir https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/0.1.3.stream2/jupyter_mynerva-0.1.3.stream2.tar.gz && \
+    jupyter labextension enable jupyter-mynerva --level=system
+
 USER $NB_USER
 
 RUN find /home/$NB_USER -name "*.ipynb" -exec jupyter trust {} \;
