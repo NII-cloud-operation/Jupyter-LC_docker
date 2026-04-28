@@ -30,7 +30,7 @@ RUN apt-get update && \
     conda clean --all -f -y
 
 ### Utilities
-RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq \
+RUN apt-get update && apt-get install -y dnsutils zip tree jq \
         rsync iputils-ping netcat-traditional && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     conda install --quiet --yes papermill && \
