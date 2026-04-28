@@ -1,7 +1,7 @@
 FROM solr:8 AS solr
 
 # niicloudoperation/notebook:feature-lab
-FROM niicloudoperation/notebook@sha256:8e70c90ee7ad046f752a7493c8f084fd3e51345c0748f9516c8765a3c87122d5
+FROM niicloudoperation/notebook@sha256:d1bdc8e8b8131618d7c525afcc9293fc69a8903c271a77ad936b339c97cd18a9
 
 USER root
 
