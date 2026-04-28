@@ -37,8 +37,8 @@ RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq \
     pip --no-cache-dir install netaddr pyapi-gitlab pysnmp pysnmp-mibs pytest-playwright && \
     conda clean --all -f -y
 
-### Install nodejs 20 for svg-term-cli
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+### Install nodejs 22 for svg-term-cli
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
     apt-get install -y nodejs && \
     apt-get clean && \
     mkdir -p /.npm && \
@@ -89,7 +89,7 @@ ENV nblineage_release_tag=0.2.0.rc4 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
     mynerva_release_tag=0.1.3.rc3 \
     mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
-    nblibram_release_tag=v2026.4.1 \
+    nblibram_release_tag=v2026.4.2 \
     nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
 RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     pip --no-cache-dir install six bash_kernel \
@@ -184,7 +184,8 @@ RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; prin
     cp /tmp/lc_notebook_diff-*/lc_notebook_diff/nbextension/jupyter-notebook-diff.css $CUSTOM_DIR/ && \
     curl -fL https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js > $CUSTOM_DIR/diff_match_patch.js && \
     curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.js > $CUSTOM_DIR/codemirror/addon/merge/merge.js && \
-    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.min.css > $CUSTOM_DIR/merge.min.css
+    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.min.css > $CUSTOM_DIR/merge.min.css && \
+    rm -rf /tmp/lc_notebook_diff-*
 
 #### CSS for JupyterLab
 RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/custom && \
