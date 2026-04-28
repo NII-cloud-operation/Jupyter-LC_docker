@@ -207,9 +207,6 @@ RUN apt-get update && apt-get install -yq lsyncd \
 RUN ARCH=$(dpkg --print-architecture) && \
     curl -fL ${nblibram_release_url}${nblibram_release_tag}/nblibram_linux_${ARCH}.tar.gz | tar xz -C /usr/local/bin/
 
-# Workaround for https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/issues/71
-RUN pip install --upgrade jupyter_core==5.6.1
-
 # Make classic notebook the default
 #ENV DOCKER_STACKS_JUPYTER_CMD=nbclassic
 
