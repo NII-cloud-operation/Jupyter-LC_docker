@@ -30,7 +30,7 @@ RUN apt-get update && \
     conda clean --all -f -y
 
 ### Utilities
-RUN apt-get update && apt-get install -y virtinst dnsutils zip tree jq \
+RUN apt-get update && apt-get install -y dnsutils zip tree jq \
         rsync iputils-ping netcat-traditional && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     conda install --quiet --yes papermill && \
@@ -67,7 +67,7 @@ ENV nblineage_release_tag=0.2.0.rc4 \
     sidestickies_release_url=https://github.com/NII-cloud-operation/sidestickies/releases/download/ \
     nbsearch_release_tag=0.2.0.rc6 \
     nbsearch_release_url=https://github.com/NII-cloud-operation/nbsearch/releases/download/ \
-    nbwhisper_release_tag=0.2.0.rc3 \
+    nbwhisper_release_tag=0.2.0.rc4 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
     lc_toc_button_release_tag=0.1.0.rc3 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
@@ -206,9 +206,6 @@ RUN apt-get update && apt-get install -yq lsyncd \
 ### Install nblibram for jupyter-mynerva
 RUN ARCH=$(dpkg --print-architecture) && \
     curl -fL ${nblibram_release_url}${nblibram_release_tag}/nblibram_linux_${ARCH}.tar.gz | tar xz -C /usr/local/bin/
-
-# Workaround for https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/issues/71
-RUN pip install --upgrade jupyter_core==5.6.1
 
 # Make classic notebook the default
 #ENV DOCKER_STACKS_JUPYTER_CMD=nbclassic
