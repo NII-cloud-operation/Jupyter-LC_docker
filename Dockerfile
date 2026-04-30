@@ -22,6 +22,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 
 SHELL ["/bin/bash", "-c"]
 
+### Remove nbclassic (we use Notebook 7; nbclassic ships unmaintained bundled JS)
+RUN mamba remove -n base -y nbclassic && mamba clean --all -f -y
+
 ### ansible
 RUN apt-get update && \
     apt-get -y install sshpass openssl ipmitool libssl-dev libffi-dev && \
@@ -53,7 +56,7 @@ RUN pip --no-cache-dir install folium
 #### nbsearch (NII) - https://github.com/NII-cloud-operation/nbsearch
 #### nbwhisper (NII) - https://github.com/NII-cloud-operation/nbwhisper
 #### jupyter-mynerva (NII) - https://github.com/NII-cloud-operation/jupyter-mynerva
-ENV nblineage_release_tag=0.2.0.rc4 \
+ENV nblineage_release_tag=0.2.0.rc5 \
     nblineage_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/releases/download/ \
     lc_index_release_tag=0.2.0.rc7 \
     lc_index_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_index/releases/download/ \
@@ -71,7 +74,7 @@ ENV nblineage_release_tag=0.2.0.rc4 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
     lc_toc_button_release_tag=0.1.0.rc3 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
-    lc_wrapper_release_tag=1.3.2.rc1 \
+    lc_wrapper_release_tag=1.3.2.rc2 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
     mynerva_release_tag=0.1.3.rc3 \
     mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
@@ -93,27 +96,6 @@ RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
     ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
-    jupyter nbclassic-extension install --py lc_run_through --sys-prefix && \
-    jupyter nbclassic-extension enable --py lc_run_through --sys-prefix && \
-    jupyter nbclassic-extension install --py lc_multi_outputs --sys-prefix && \
-    jupyter nbclassic-extension enable --py lc_multi_outputs --sys-prefix && \
-    jupyter nbclassic-extension install --py lc_index --sys-prefix && \
-    jupyter nbclassic-extension enable --py lc_index --sys-prefix && \
-    jupyter nbclassic-extension install --py lc_wrapper --sys-prefix && \
-    jupyter nbclassic-extension enable --py lc_wrapper --sys-prefix && \
-    jupyter nbclassic-extension install --py lc_notebook_diff --sys-prefix && \
-    jupyter nbclassic-extension enable --py lc_notebook_diff --sys-prefix && \
-    jupyter nbclassic-extension install --py nbtags --sys-prefix && \
-    jupyter nbclassic-serverextension enable --py nbtags --sys-prefix && \
-    jupyter nbclassic-extension install --py nbsearch --sys-prefix && \
-    jupyter nbclassic-serverextension enable --py nbsearch --sys-prefix && \
-    # jupyter nbclassic-extension install --py nbwhisper --sys-prefix && \
-    # jupyter nbclassic-serverextension enable --py nbwhisper --sys-prefix && \
-    jupyter nbclassic-extension install --py jupyter_nbextensions_configurator --sys-prefix && \
-    jupyter nbclassic-extension enable --py jupyter_nbextensions_configurator --sys-prefix && \
-    jupyter nbclassic-serverextension enable --py jupyter_nbextensions_configurator --sys-prefix && \
-    jupyter nbclassic-extension enable collapsible_headings/main --sys-prefix && \
-    jupyter nbclassic-extension enable toc2/main --sys-prefix && \
     fix-permissions /home/$NB_USER
 
 # To enable the nbsearch or sidestickies, you need to run the following command in the notebook.
@@ -157,21 +139,6 @@ RUN fix-permissions /home/$NB_USER
 
 ### Bash Strict Mode
 RUN cp /tmp/bash_env /etc/bash_env
-
-### Theme for jupyter
-RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/nbclassic/static/custom && \
-    cat /tmp/custom.css >> $CUSTOM_DIR/custom.css && \
-    cp /tmp/logo.png $CUSTOM_DIR/logo.png && \
-    mkdir -p $CUSTOM_DIR/codemirror/addon/merge/ && \
-    curl -fL https://raw.githubusercontent.com/cytoscape/cytoscape.js/master/dist/cytoscape.min.js > $CUSTOM_DIR/cytoscape.min.js && \
-    curl -fL https://raw.githubusercontent.com/iVis-at-Bilkent/cytoscape.js-view-utilities/master/cytoscape-view-utilities.js > $CUSTOM_DIR/cytoscape-view-utilities.js && \
-    curl -fL ${diff_release_url}${diff_release_tag}/lc_notebook_diff-${diff_release_tag}.tar.gz | tar xzf - -C /tmp && \
-    cp /tmp/lc_notebook_diff-*/lc_notebook_diff/nbextension/jupyter-notebook-diff.js $CUSTOM_DIR/ && \
-    cp /tmp/lc_notebook_diff-*/lc_notebook_diff/nbextension/jupyter-notebook-diff.css $CUSTOM_DIR/ && \
-    curl -fL https://cdnjs.cloudflare.com/ajax/libs/diff_match_patch/20121119/diff_match_patch.js > $CUSTOM_DIR/diff_match_patch.js && \
-    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.js > $CUSTOM_DIR/codemirror/addon/merge/merge.js && \
-    curl -fL https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.35.0/addon/merge/merge.min.css > $CUSTOM_DIR/merge.min.css && \
-    rm -rf /tmp/lc_notebook_diff-*
 
 #### CSS for JupyterLab
 RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/custom && \
