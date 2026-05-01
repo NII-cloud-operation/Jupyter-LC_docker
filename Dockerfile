@@ -66,9 +66,9 @@ ENV nblineage_release_tag=0.2.0.rc5 \
     lc_run_through_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_run_through/releases/download/ \
     diff_release_tag=0.2.0.rc3 \
     diff_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff/releases/download/ \
-    sidestickies_release_tag=0.3.1.rc5 \
+    sidestickies_release_tag=0.3.1.rc6 \
     sidestickies_release_url=https://github.com/NII-cloud-operation/sidestickies/releases/download/ \
-    nbsearch_release_tag=0.2.0.rc6 \
+    nbsearch_release_tag=0.2.0.rc7 \
     nbsearch_release_url=https://github.com/NII-cloud-operation/nbsearch/releases/download/ \
     nbwhisper_release_tag=0.2.0.rc4 \
     nbwhisper_release_url=https://github.com/NII-cloud-operation/nbwhisper/releases/download/ \
@@ -80,8 +80,7 @@ ENV nblineage_release_tag=0.2.0.rc5 \
     mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
     nblibram_release_tag=v2026.4.2 \
     nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
-RUN pip --no-cache-dir install jupyter_nbextensions_configurator && \
-    pip --no-cache-dir install six bash_kernel \
+RUN pip --no-cache-dir install six bash_kernel \
     jupyterlab-language-pack-ja-JP \
     ${nblineage_release_url}${nblineage_release_tag}/nblineage-${nblineage_release_tag}.tar.gz \
     ${lc_run_through_release_url}${lc_run_through_release_tag}/lc_run_through-${lc_run_through_release_tag}.tar.gz \
@@ -141,10 +140,11 @@ RUN fix-permissions /home/$NB_USER
 RUN cp /tmp/bash_env /etc/bash_env
 
 #### CSS for JupyterLab
-RUN CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/custom && \
+RUN LOGO_DATA_URI="data:image/png;base64,$(base64 -w0 /tmp/logo.png)" && \
+    sed -i "s|__LOGO_DATA_URI__|${LOGO_DATA_URI}|" /tmp/nb7-custom.css /tmp/lab-custom.css && \
+    CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/notebook/custom && \
     mkdir -p $CUSTOM_DIR && \
     cp /tmp/nb7-custom.css $CUSTOM_DIR/custom.css && \
-    cp /tmp/logo.png $CUSTOM_DIR/logo.png && \
     CUSTOM_DIR=$(python -c 'from distutils.sysconfig import get_python_lib; print(get_python_lib())')/jupyterlab/themes/@jupyterlab && \
     cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-dark-extension/index.css && \
     cat /tmp/lab-custom.css >> $CUSTOM_DIR/theme-light-extension/index.css && \

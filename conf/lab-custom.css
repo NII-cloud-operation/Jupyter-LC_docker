@@ -11,7 +11,7 @@
     left: 0;
     width: 26px;
     height: 26px;
-    background-image: url(../../../../../custom/logo.png);
+    background-image: url('__LOGO_DATA_URI__');
     background-size: cover;
     background-position: left;
     pointer-events: none;
