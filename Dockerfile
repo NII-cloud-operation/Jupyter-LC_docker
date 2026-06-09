@@ -1,7 +1,7 @@
 FROM solr:8 AS solr
 
 # niicloudoperation/notebook:feature-lab
-FROM niicloudoperation/notebook@sha256:8e70c90ee7ad046f752a7493c8f084fd3e51345c0748f9516c8765a3c87122d5
+FROM niicloudoperation/notebook@sha256:d75cae3f58464619817bb775e2ea55afc483968af43cc92c69835da7f4fd0f45
 
 USER root
 
@@ -35,6 +35,16 @@ RUN mkdir -p /opt/minio/bin/ && \
 # ep_weave
 RUN mkdir /opt/etherpad && chown jovyan:users -R /opt/etherpad && \
     chown jovyan:users -R /var/solr /var/log/nginx /var/lib/nginx
+
+# Install nodejs for the etherpad (ep_weave) build.
+# The base image no longer ships node since svg-term-cli was dropped from feature/lab.
+# Etherpad (develop) requires Node >= 24.
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && \
+    apt-get install -y nodejs && \
+    mkdir -p /.npm && chown jovyan:users -R /.npm && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+ENV NPM_CONFIG_PREFIX=/.npm
+ENV PATH=/.npm/bin/:${PATH}
 
 USER $NB_UID
 
@@ -125,7 +135,6 @@ RUN jupyter labextension enable sidestickies --level=system && \
 RUN cp /tmp/conf/etherpad-settings.json /opt/etherpad/settings.json
 
 USER $NB_USER
-RUN jupyter nbclassic-extension enable --py --user nbtags
 
 # for sidestickies -->
 
@@ -136,10 +145,4 @@ RUN mkdir -p /home/$NB_USER/.nbsearch && \
 RUN precreate-core jupyter-notebook /opt/nbsearch/solr/jupyter-notebook/ && \
     precreate-core jupyter-cell /opt/nbsearch/solr/jupyter-cell/ && \
     precreate-core pad /tmp/ep_weave/solr/pad/
-
-RUN jupyter nbclassic-serverextension enable --py --user nbsearch && \
-    jupyter nbclassic-extension enable --py --user nbsearch && \
-    jupyter nbclassic-serverextension enable --py --user nbtags && \
-    jupyter nbclassic-extension enable --py --user nbtags && \
-    jupyter nbclassic-extension enable --py --user lc_notebook_diff
 # <-- for nbsearch
