@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.5.5
+FROM quay.io/jupyter/scipy-notebook:notebook-7.5.7
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
@@ -76,7 +76,7 @@ ENV nblineage_release_tag=0.2.0.rc5 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
     lc_wrapper_release_tag=1.3.2.rc2 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
-    mynerva_release_tag=0.1.3.rc3 \
+    mynerva_release_tag=0.1.3.rc5 \
     mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
     nblibram_release_tag=v2026.4.2 \
     nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
