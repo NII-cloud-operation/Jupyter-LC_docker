@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.5.7
+FROM quay.io/jupyter/scipy-notebook:notebook-7.6.2
 MAINTAINER https://github.com/NII-cloud-operation
 
 USER root
