@@ -11,6 +11,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    env:
+      IMAGE_NAME: ${{ vars.DOCKER_IMAGE || 'niicloudoperation/notebook' }}
 
     steps:
       - name: Checkout repository
@@ -45,13 +50,14 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ vars.DOCKER_IMAGE || 'niicloudoperation/notebook' }}
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
             type=ref,event=tag
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push
+        id: build
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -59,3 +65,54 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Scan pushed image with Trivy
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: image
+          image-ref: ${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          scanners: vuln
+          vuln-type: os,library
+          format: json
+          output: trivy-results-notebook.json
+          exit-code: '0'
+          list-all-pkgs: 'true'
+
+      - name: Convert Trivy report to SARIF
+        env:
+          TRIVY_SCANNERS: ''
+        run: |
+          trivy convert \
+            --format sarif \
+            --output trivy-results-notebook.sarif \
+            trivy-results-notebook.json
+
+      - name: Render vulnerability summary
+        env:
+          IMAGE: ${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}
+          COMMIT: ${{ github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python3 .github/scripts/ci/render-trivy-report.py \
+            --input trivy-results-notebook.json \
+            --output trivy-report-notebook.md \
+            --image "$IMAGE" \
+            --commit "$COMMIT" \
+            --run-url "$RUN_URL"
+          tee -a "$GITHUB_STEP_SUMMARY" < trivy-report-notebook.md
+
+      - name: Upload vulnerability reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-image-scan-notebook
+          path: |
+            trivy-results-notebook.json
+            trivy-results-notebook.sarif
+            trivy-report-notebook.md
+          retention-days: 14
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@5595ccaf912efad79be6eef63a5619ff05969be3 # v4
+        with:
+          sarif_file: trivy-results-notebook.sarif
+          category: trivy-notebook
