@@ -12,6 +12,9 @@ on:
 jobs:
   notebook-e2e:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
       - name: Checkout repository
@@ -45,6 +48,66 @@ jobs:
         run: |
           set -euxo pipefail
           docker build -t niicloudoperation/notebook:test .
+
+      - name: Scan E2E image with Trivy
+        if: github.event_name == 'pull_request'
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: image
+          image-ref: niicloudoperation/notebook:test
+          scanners: vuln
+          vuln-type: os,library
+          format: json
+          output: trivy-results-notebook.json
+          exit-code: '0'
+          list-all-pkgs: 'true'
+
+      - name: Convert Trivy report to SARIF
+        if: github.event_name == 'pull_request'
+        env:
+          TRIVY_SCANNERS: ''
+        run: |
+          trivy convert \
+            --format sarif \
+            --output trivy-results-notebook.sarif \
+            trivy-results-notebook.json
+
+      - name: Render vulnerability summary
+        if: github.event_name == 'pull_request'
+        env:
+          IMAGE: niicloudoperation/notebook:test
+          COMMIT: ${{ github.event.pull_request.head.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          python3 .github/scripts/ci/render-trivy-report.py \
+            --input trivy-results-notebook.json \
+            --output trivy-report-notebook.md \
+            --image "$IMAGE" \
+            --commit "$COMMIT" \
+            --run-url "$RUN_URL"
+          tee -a "$GITHUB_STEP_SUMMARY" < trivy-report-notebook.md
+
+      - name: Upload vulnerability reports
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-image-scan-notebook
+          path: |
+            trivy-results-notebook.json
+            trivy-results-notebook.sarif
+            trivy-report-notebook.md
+          retention-days: 14
+
+      # Fork pull requests receive a read-only token, so their reports remain
+      # available in the workflow summary and artifact instead of Code Scanning.
+      - name: Upload SARIF to GitHub Code Scanning
+        if: >-
+          github.event_name == 'pull_request' &&
+          github.event.pull_request.head.repo.full_name == github.repository
+        uses: github/codeql-action/upload-sarif@5595ccaf912efad79be6eef63a5619ff05969be3 # v4
+        with:
+          sarif_file: trivy-results-notebook.sarif
+          category: trivy-notebook
 
       - name: Prepare test workspace
         run: |
