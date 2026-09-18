@@ -12,23 +12,23 @@ def markdown_escape(value):
     return str(value or '-').replace('\n', ' ').replace('|', '\\|')
 
 
-def get_vulnerabilities(report):
+def get_findings(report):
     return [
-        vulnerability
+        (result.get('Target'), vulnerability)
         for result in report.get('Results', [])
         for vulnerability in result.get('Vulnerabilities') or []
     ]
 
 
 def render_report(report, image, commit, run_url):
-    vulnerabilities = get_vulnerabilities(report)
+    findings = get_findings(report)
     counts = Counter(
         vulnerability.get('Severity', 'UNKNOWN').upper()
-        for vulnerability in vulnerabilities
+        for _, vulnerability in findings
     )
     fixable_counts = Counter(
         vulnerability.get('Severity', 'UNKNOWN').upper()
-        for vulnerability in vulnerabilities
+        for _, vulnerability in findings
         if vulnerability.get('FixedVersion')
     )
 
@@ -39,7 +39,7 @@ def render_report(report, image, commit, run_url):
         f'- Image: `{markdown_escape(image)}`',
         f'- Commit: [`{commit[:12]}`]({run_url.rsplit("/actions/runs/", 1)[0]}/commit/{commit})',
         f'- Workflow run: [details]({run_url})',
-        f'- Findings: **{len(vulnerabilities)}** '
+        f'- Findings: **{len(findings)}** '
         f'({sum(fixable_counts.values())} with a fix available)',
         '',
         '| Severity | Total | Fix available |',
@@ -52,17 +52,18 @@ def render_report(report, image, commit, run_url):
 
     important = sorted(
         (
-            vulnerability
-            for vulnerability in vulnerabilities
-            if vulnerability.get('Severity', 'UNKNOWN').upper() in {'CRITICAL', 'HIGH'}
+            finding
+            for finding in findings
+            if finding[1].get('Severity', 'UNKNOWN').upper() in {'CRITICAL', 'HIGH'}
         ),
-        key=lambda vulnerability: (
+        key=lambda finding: (
             SEVERITY_ORDER.get(
-                vulnerability.get('Severity', 'UNKNOWN').upper(),
+                finding[1].get('Severity', 'UNKNOWN').upper(),
                 len(SEVERITIES),
             ),
-            vulnerability.get('VulnerabilityID', ''),
-            vulnerability.get('PkgName', ''),
+            finding[1].get('VulnerabilityID', ''),
+            finding[1].get('PkgName', ''),
+            finding[0] or '',
         ),
     )
     lines.extend([
@@ -72,15 +73,16 @@ def render_report(report, image, commit, run_url):
     ])
     if important:
         lines.extend([
-            '| Severity | Vulnerability | Package | Installed | Fixed |',
-            '| --- | --- | --- | --- | --- |',
+            '| Severity | Vulnerability | Package | Target | Installed | Fixed |',
+            '| --- | --- | --- | --- | --- | --- |',
         ])
-        for vulnerability in important[:20]:
+        for target, vulnerability in important[:20]:
             lines.append(
-                '| {severity} | {identifier} | {package} | {installed} | {fixed} |'.format(
+                '| {severity} | {identifier} | {package} | {target} | {installed} | {fixed} |'.format(
                     severity=markdown_escape(vulnerability.get('Severity')),
                     identifier=markdown_escape(vulnerability.get('VulnerabilityID')),
                     package=markdown_escape(vulnerability.get('PkgName')),
+                    target=markdown_escape(target),
                     installed=markdown_escape(vulnerability.get('InstalledVersion')),
                     fixed=markdown_escape(vulnerability.get('FixedVersion')),
                 ),
