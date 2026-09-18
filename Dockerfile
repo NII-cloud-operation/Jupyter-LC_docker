@@ -1,26 +1,79 @@
-FROM quay.io/jupyter/scipy-notebook:notebook-7.6.2
+FROM quay.io/jupyter/minimal-notebook:notebook-7.6.2
 MAINTAINER https://github.com/NII-cloud-operation
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 USER root
+
+# Recreate the scipy-notebook package set without build-essential or Cython.
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
+    cm-super \
+    ffmpeg && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
+
+USER ${NB_UID}
+
+RUN mamba install --yes \
+    'altair' \
+    'beautifulsoup4' \
+    'bokeh' \
+    'bottleneck' \
+    'cloudpickle' \
+    'conda-forge::blas=*=openblas' \
+    'dask' \
+    'dill' \
+    'h5py' \
+    'ipympl' \
+    'ipywidgets' \
+    'jupyterlab-git' \
+    'matplotlib-base' \
+    'numba' \
+    'numexpr' \
+    'openpyxl' \
+    'pandas' \
+    'patsy' \
+    'protobuf' \
+    'pytables' \
+    'scikit-image' \
+    'scikit-learn' \
+    'scipy' \
+    'seaborn' \
+    'sqlalchemy' \
+    'statsmodels' \
+    'sympy' \
+    'widgetsnbextension' \
+    'xlrd' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+    fix-permissions "/home/${NB_USER}"
+
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
+
+USER root
+
 # Install tools and fonts
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     git \
+    imagemagick \
+    inkscape \
     vim \
     jed \
-    emacs \
     unzip \
     libsm6 \
     pandoc \
     texlive-latex-recommended \
     libxrender1 \
-    inkscape \
     wget \
     curl \
     fonts-ipafont-gothic fonts-ipafont-mincho \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-SHELL ["/bin/bash", "-c"]
 
 ### Remove nbclassic (we use Notebook 7; nbclassic ships unmaintained bundled JS)
 RUN mamba remove -n base -y nbclassic && mamba clean --all -f -y
@@ -78,9 +131,14 @@ ENV nblineage_release_tag=0.2.0.rc5 \
     lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
     mynerva_release_tag=0.1.3.rc6 \
     mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
-    nblibram_release_tag=v2026.4.2 \
+    nblibram_release_tag=v2026.9.0 \
     nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
-RUN pip --no-cache-dir install six bash_kernel \
+# nblineage uses hatch-jupyter-builder 0.9.1, which is incompatible with the
+# two-parameter BuildHookInterface introduced in Hatchling 1.32.1.
+# See https://github.com/pypa/hatch/issues/2437
+RUN printf '%s\n' 'hatchling<1.32.1' > /tmp/pip-build-constraints.txt && \
+    PIP_BUILD_CONSTRAINT=/tmp/pip-build-constraints.txt \
+    pip --no-cache-dir install six bash_kernel \
     jupyterlab-language-pack-ja-JP \
     ${nblineage_release_url}${nblineage_release_tag}/nblineage-${nblineage_release_tag}.tar.gz \
     ${lc_run_through_release_url}${lc_run_through_release_tag}/lc_run_through-${lc_run_through_release_tag}.tar.gz \
@@ -92,7 +150,8 @@ RUN pip --no-cache-dir install six bash_kernel \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
     ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
     ${lc_toc_button_release_url}${lc_toc_button_release_tag}/table_of_contents-${lc_toc_button_release_tag}.tar.gz \
-    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz
+    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz && \
+    rm /tmp/pip-build-constraints.txt
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
     fix-permissions /home/$NB_USER
