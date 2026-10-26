@@ -128,11 +128,7 @@ ENV nblineage_release_tag=0.2.0.rc5 \
     lc_toc_button_release_tag=0.1.0.rc3 \
     lc_toc_button_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_ToC_button/releases/download/ \
     lc_wrapper_release_tag=1.3.2.rc2 \
-    lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/ \
-    mynerva_release_tag=0.1.3.rc6 \
-    mynerva_release_url=https://github.com/NII-cloud-operation/jupyter-mynerva/releases/download/ \
-    nblibram_release_tag=v2026.9.0 \
-    nblibram_release_url=https://github.com/NII-cloud-operation/nblibram/releases/download/
+    lc_wrapper_release_url=https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/releases/download/
 # nblineage uses hatch-jupyter-builder 0.9.1, which is incompatible with the
 # two-parameter BuildHookInterface introduced in Hatchling 1.32.1.
 # See https://github.com/pypa/hatch/issues/2437
@@ -150,7 +146,7 @@ RUN printf '%s\n' 'hatchling<1.32.1' > /tmp/pip-build-constraints.txt && \
     ${nbsearch_release_url}${nbsearch_release_tag}/nbsearch-${nbsearch_release_tag}.tar.gz \
     ${nbwhisper_release_url}${nbwhisper_release_tag}/nbwhisper-${nbwhisper_release_tag}.tar.gz \
     ${lc_toc_button_release_url}${lc_toc_button_release_tag}/table_of_contents-${lc_toc_button_release_tag}.tar.gz \
-    ${mynerva_release_url}${mynerva_release_tag}/jupyter_mynerva-${mynerva_release_tag}.tar.gz && \
+    jupyter-mynerva==2026.10.1 && \
     rm /tmp/pip-build-constraints.txt
 
 RUN jupyter nblineage quick-setup --sys-prefix && \
@@ -228,10 +224,6 @@ RUN apt-get update && apt-get install -yq lsyncd \
     && cp /tmp/nbsearch/launch.sh /usr/local/bin/before-notebook.d/nbsearch-launch.sh \
     && cp /tmp/nbsearch/update-index* /opt/nbsearch/ \
     && chmod +x /usr/local/bin/before-notebook.d/nbsearch-launch.sh /opt/nbsearch/update-index
-
-### Install nblibram for jupyter-mynerva
-RUN ARCH=$(dpkg --print-architecture) && \
-    curl -fL ${nblibram_release_url}${nblibram_release_tag}/nblibram_linux_${ARCH}.tar.gz | tar xz -C /usr/local/bin/
 
 # Make classic notebook the default
 #ENV DOCKER_STACKS_JUPYTER_CMD=nbclassic
