@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/minimal-notebook:notebook-7.6.3
+FROM quay.io/jupyter/minimal-notebook:notebook-7.6.4
 MAINTAINER https://github.com/NII-cloud-operation
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
